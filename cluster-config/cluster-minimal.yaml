@@ -1,0 +1,34 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-demo
+  region: us-east-1
+  version: "1.21"
+
+availabilityZones:
+- us-east-1a
+- us-east-1b
+
+privateCluster:
+  enabled: false
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: managed-1
+    amiFamily: AmazonLinux2
+    # instancePrefix: managed
+    minSize: 2
+    maxSize: 5
+    volumeSize: 20
+    instanceTypes:
+    - "t3.small"
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        autoScaler: true
+        certManager: true
+        cloudWatch: true
+        ebs: true

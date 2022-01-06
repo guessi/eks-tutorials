@@ -1,0 +1,91 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-demo
+  region: us-east-1
+  version: "1.21"
+
+availabilityZones:
+- us-east-1a
+- us-east-1b
+
+privateCluster:
+  enabled: false
+
+vpc:
+  autoAllocateIPv6: false
+  cidr: 100.168.0.0/16
+  # will takes around 10 minutes to activate/deactive access endpoints
+  clusterEndpoints:
+    privateAccess: false
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
+  # nat:
+  #   gateway: Single
+
+kubernetesNetworkConfig:
+  serviceIPv4CIDR: 10.100.0.0/16
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: managed-1
+    amiFamily: AmazonLinux2
+    # instancePrefix: managed
+    minSize: 2
+    maxSize: 5
+    volumeSize: 20
+    instanceTypes:
+    - "t3.small"
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        autoScaler: true
+        certManager: true
+        cloudWatch: true
+        ebs: true
+    # spot: true
+    # privateNetworking: true
+
+nodeGroups:
+  - name: mixed-1
+    amiFamily: AmazonLinux2
+    # instancePrefix: mixed
+    minSize: 2
+    maxSize: 5
+    volumeSize: 20
+    instancesDistribution:
+      instanceTypes:
+      - "t3.small"
+      maxPrice: 0.015
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 50
+      # spotInstancePools: 2
+      spotAllocationStrategy: "capacity-optimized-prioritized"
+      capacityRebalance: false
+    iam:
+      withAddonPolicies:
+        albIngress: true
+        autoScaler: true
+        certManager: true
+        cloudWatch: true
+        ebs: true
+    # privateNetworking: true
+
+fargateProfiles:
+  - name: fp-1
+    selectors:
+      - namespace: game-2048
+        labels:
+          run-with-fargate: "true"
+
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+    - "api"
+    - "audit"
+    - "authenticator"
+    - "controllerManager"
+    - "scheduler"
