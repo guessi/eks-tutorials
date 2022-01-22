@@ -21,8 +21,8 @@ vpc:
     privateAccess: false
     publicAccess: true
   manageSharedNodeSecurityGroupRules: true
-  # nat:
-  #   gateway: Single
+  nat:
+    gateway: HighlyAvailable # other options: Disable, Single (default)
 
 kubernetesNetworkConfig:
   serviceIPv4CIDR: 10.100.0.0/16

@@ -1,1 +1,3 @@
 iam-policy.json
+aws-ebs-csi-driver-policy.json
+aws-efs-csi-driver-policy.json

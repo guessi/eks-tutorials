@@ -13,6 +13,10 @@ availabilityZones:
 privateCluster:
   enabled: false
 
+vpc:
+  nat:
+    gateway: HighlyAvailable # other options: Disable, Single (default)
+
 iam:
   withOIDC: true
 
@@ -32,3 +36,5 @@ managedNodeGroups:
         certManager: true
         cloudWatch: true
         ebs: true
+    # spot: true
+    # privateNetworking: true

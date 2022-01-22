@@ -48,44 +48,17 @@ kind: Service
 metadata:
   name: nginx-service
   namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-type: "external"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
   labels:
     app: nginx
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: nginx
   ports:
   - name: http
     port: 80
     targetPort: 80
-
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  namespace: default
-  name: nginx-ingress
-  annotations:
-    # Required annotations
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-
-    # (Optional) Additional annotation for complex configure (comma separated `stringList`)
-    # alb.ingress.kubernetes.io/certificate-arn: cert1-arn,cert2-arn
-
-    # (Optional) if you would like to serve 80 port as well
-    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    # alb.ingress.kubernetes.io/ssl-redirect: "443"
-spec:
-  rules:
-  - host: "entry1.example.com"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: nginx-service
-            port:
-              number: 80
