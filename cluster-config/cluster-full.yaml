@@ -38,7 +38,8 @@ managedNodeGroups:
     maxSize: 5
     volumeSize: 20
     instanceTypes:
-    - "t3.small"
+    - "t3.medium"
+    # releaseVersion: "1.21.5-20220123"
     iam:
       withAddonPolicies:
         albIngress: true
