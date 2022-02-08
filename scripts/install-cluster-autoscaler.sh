@@ -19,7 +19,7 @@ fi
 echo "[debug] helm repo update"
 helm repo update
 
-echo "[debug] detecting IAM policy 'AWSLoadBalancerControllerIAMPolicy' existance"
+echo "[debug] detecting IAM policy 'AmazonEKSClusterAutoscalerPolicy' existance"
 aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text | grep 'AmazonEKSClusterAutoscalerPolicy'
 
 if [ $? -ne 0 ]; then

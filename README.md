@@ -24,7 +24,7 @@ Check `eksctl` version
 ```sh
 % eksctl version
 
-0.80.0
+0.82.0
 ```
 
 Check `kubectl` version
@@ -32,7 +32,7 @@ Check `kubectl` version
 ```sh
 % kubectl version --client --short
 
-Client Version: v1.23.2
+Client Version: v1.23.3
 ```
 
 Check `helm` version
@@ -40,7 +40,7 @@ Check `helm` version
 ```sh
 % helm version --short
 
-v3.7.2+g663a896
+v3.8.0+gd141386
 ```
 </details>
 
@@ -48,7 +48,7 @@ v3.7.2+g663a896
 
 - Goal 1: Create EKS cluster
 - Goal 2: Deploy a simple application on EKS cluster
-- Goal 3: Find out why some pods not being schedualed
+- Goal 3: Find out why some pods not being scheduled
 - Goal 4: Access web application via Load Balancer
 - Goal 5: Find out why Load Balancer not working with `nginx-full-alb.yaml`
 - Goal 6: Cleanup
@@ -63,7 +63,7 @@ Create EKS cluster with minimal setup (for demo purpose only)
 
 # Start
 
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.80.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.82.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -121,12 +121,12 @@ Create EKS cluster with minimal setup (for demo purpose only)
 2022-XX-XX XX:XX:XX [ℹ]  no tasks
 2022-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "managed-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-18-244.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-53-161.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-25-108.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-50-93.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "managed-1"
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "managed-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-18-244.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-53-161.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-25-108.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-50-93.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 
 # All done !!!
@@ -139,9 +139,9 @@ Get EKS cluster nodes information
 
 ```sh
 % kubectl get nodes
-NAME                             STATUS   ROLES    AGE   VERSION
-ip-192-168-18-244.ec2.internal   Ready    <none>   11m   v1.21.5-eks-bc4871b
-ip-192-168-53-161.ec2.internal   Ready    <none>   11m   v1.21.5-eks-bc4871b
+NAME                             STATUS   ROLES    AGE    VERSION
+ip-192-168-25-108.ec2.internal   Ready    <none>   111m   v1.21.5-eks-9017834
+ip-192-168-50-93.ec2.internal    Ready    <none>   111m   v1.21.5-eks-9017834
 ```
 
 
