@@ -33,9 +33,15 @@ managedNodeGroups:
     iam:
       withAddonPolicies:
         albIngress: true
+        appMesh: true
+        # appMeshPreview: true
         autoScaler: true
         certManager: true
         cloudWatch: true
         ebs: true
+        # externalDNS: true
+        # fsx: true
+        # imageBuilder: true
+        # xRay: true
     # spot: true
     # privateNetworking: true
