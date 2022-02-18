@@ -32,7 +32,7 @@ Check `kubectl` version
 ```sh
 % kubectl version --client --short
 
-Client Version: v1.23.3
+Client Version: v1.23.4
 ```
 
 Check `helm` version
@@ -173,10 +173,7 @@ At this step, if you create cluster with `cluster-full.yaml`, you might find som
 
 ### Goal 3: Find out why some pods not being scheduled?
 
-<details>
-<summary>Click here to see the answer :mag:</summary>
-please try to find the reason by yourself
-</details>
+Please try to find the reason by yourself.
 
 ### Goal 4: Access web application via Load Balancer
 
@@ -266,6 +263,8 @@ Lastly, it's an **OPTIONAL** change, cleanup IAM policy
     xargs -n 1 aws iam delete-policy --policy-arn
 ```
 
+and don't forget to cleanup Identity Provider (IdP) with care.
+- https://console.aws.amazon.com/iamv2/home?#/identity_providers
 
 ### Bonus
 
@@ -279,4 +278,4 @@ You may find sample installation scripts for install addons to your cluster unde
 - Cluster AutoScaler
 - Metrics Server
 
-Please note it's for demonstration purpose only, please DO NOT blindly apply it to your production environments
+Please note it's for demonstration purpose only, please **_DO NOT_** blindly apply it to your production environments

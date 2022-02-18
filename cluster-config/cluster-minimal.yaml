@@ -28,20 +28,29 @@ managedNodeGroups:
     maxSize: 5
     volumeSize: 20
     instanceTypes:
-    - "t3.medium"
-    # releaseVersion: "1.21.5-20220123"
+    - "t3.small"
+    # privateNetworking: true
+    # releaseVersion: "1.21.5-20220210" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # spot: true
     iam:
       withAddonPolicies:
         albIngress: true
-        appMesh: true
+        # appMesh: true
         # appMeshPreview: true
         autoScaler: true
-        certManager: true
+        # certManager: true
         cloudWatch: true
-        ebs: true
+        # ebs: true
         # externalDNS: true
         # fsx: true
         # imageBuilder: true
         # xRay: true
-    # spot: true
-    # privateNetworking: true
+
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+    # - "api"
+    - "audit"
+    # - "authenticator"
+    # - "controllerManager"
+    # - "scheduler"
