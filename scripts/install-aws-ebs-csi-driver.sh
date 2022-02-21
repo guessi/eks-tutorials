@@ -33,7 +33,7 @@ else
   echo "[debug] found IAM policy 'AmazonEKS_EBS_CSI_Driver_Policy'"
 fi
 
-echo "[debug] ensure existance of IAM Service Account 'cluster-autoscaler'"
+echo "[debug] ensure existance of IAM Service Account 'ebs-csi-controller-sa'"
 eksctl create iamserviceaccount \
   --namespace kube-system \
   --cluster ${EKS_CLUSTER_NAME} \
