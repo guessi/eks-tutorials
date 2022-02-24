@@ -30,7 +30,7 @@ managedNodeGroups:
     instanceTypes:
     - "t3.small"
     # privateNetworking: true
-    # releaseVersion: "1.21.5-20220210" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # releaseVersion: "1.21.5-20220216" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
     # spot: true
     iam:
       withAddonPolicies:
@@ -54,3 +54,8 @@ cloudWatch:
     # - "authenticator"
     # - "controllerManager"
     # - "scheduler"
+
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: kube-proxy
