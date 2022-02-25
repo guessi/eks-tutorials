@@ -44,7 +44,11 @@ managedNodeGroups:
     # spot: true
     iam:
       withAddonPolicies:
-        albIngress: true
+        # hint: "albIngress" have be set as deprecated after 0.84.0
+        # - https://github.com/weaveworks/eksctl/pull/4738
+        # - https://github.com/weaveworks/eksctl/issues/4675
+        # albIngress: true
+        awsLoadBalancerController: true
         appMesh: true
         # appMeshPreview: true
         autoScaler: true
@@ -74,7 +78,11 @@ nodeGroups:
       capacityRebalance: false
     iam:
       withAddonPolicies:
-        albIngress: true
+        # hint: "albIngress" have be set as deprecated after 0.84.0
+        # - https://github.com/weaveworks/eksctl/pull/4738
+        # - https://github.com/weaveworks/eksctl/issues/4675
+        # albIngress: true
+        awsLoadBalancerController: true
         appMesh: true
         # appMeshPreview: true
         autoScaler: true
