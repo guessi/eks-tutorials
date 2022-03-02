@@ -8,7 +8,7 @@ export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output tex
 echo "[debug] AWS Account ID: ${AWS_ACCOUNT_ID}"
 
 echo "[debug] detecting VPC ID"
-export VPC_ID=$(aws eks describe-cluster --name eks-demo --query 'cluster.resourcesVpcConfig.vpcId' --output text --region ${AWS_REGION})
+export VPC_ID=$(aws eks describe-cluster --name ${EKS_CLUSTER_NAME} --query 'cluster.resourcesVpcConfig.vpcId' --output text --region ${AWS_REGION})
 echo "[debug] VPC ID: ${VPC_ID}"
 
 echo "[debug] detecting chart repo [eks-charts] existance"
