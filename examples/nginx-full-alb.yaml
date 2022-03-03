@@ -2,25 +2,66 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
-  namespace: default
   labels:
     app: nginx
+  name: nginx-deployment
+  namespace: default
 spec:
+  progressDeadlineSeconds: 600
   replicas: 6
   selector:
     matchLabels:
       app: nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:stable-alpine
+      - image: nginx:stable-alpine
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - echo Hello from the postStart handler > /usr/share/message
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - nginx -s quit; while killall -0 nginx; do sleep 1; done
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: nginx
         ports:
         - containerPort: 80
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           limits:
             cpu: 100m
@@ -28,6 +69,9 @@ spec:
           requests:
             cpu: 50m
             memory: 50Mi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
 
 ---
 apiVersion: autoscaling/v1
@@ -48,25 +92,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
-  namespace: default
   labels:
     app: nginx
+  name: nginx-service
+  namespace: default
 spec:
-  type: NodePort
-  selector:
-    app: nginx
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
   ports:
   - name: http
     port: 80
     targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort
 
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  namespace: default
-  name: nginx-ingress
   annotations:
     # Required annotations
     kubernetes.io/ingress.class: alb
@@ -79,15 +124,17 @@ metadata:
     # (Optional) if you would like to serve 80 port as well
     # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     # alb.ingress.kubernetes.io/ssl-redirect: "443"
+  name: nginx-ingress
+  namespace: default
 spec:
   rules:
-  - host: "entry1.example.com"
+  - host: entry1.example.com
     http:
       paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
+      - backend:
           service:
             name: nginx-service
             port:
               number: 80
+        path: /
+        pathType: Prefix
