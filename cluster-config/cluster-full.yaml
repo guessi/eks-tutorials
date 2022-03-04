@@ -6,6 +6,8 @@ metadata:
   region: us-east-1
   version: "1.21"
 
+# mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
+# - https://github.com/weaveworks/eksctl/issues/4891
 availabilityZones:
 - us-east-1a
 - us-east-1b
@@ -15,7 +17,7 @@ privateCluster:
 
 vpc:
   autoAllocateIPv6: false
-  cidr: 100.168.0.0/16
+  cidr: 192.168.0.0/16
   # will takes around 10 minutes to activate/deactive access endpoints
   clusterEndpoints:
     privateAccess: false
@@ -25,6 +27,7 @@ vpc:
     gateway: HighlyAvailable # other options: Disable, Single (default)
 
 kubernetesNetworkConfig:
+  ipFamily: IPv4
   serviceIPv4CIDR: 10.100.0.0/16
 
 iam:
@@ -38,9 +41,9 @@ managedNodeGroups:
     maxSize: 5
     volumeSize: 20
     instanceTypes:
-    - "t3.medium"
+    - "t3.small"
     # privateNetworking: true
-    # releaseVersion: "1.21.5-20220216" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # releaseVersion: "1.21.5-20220226" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
     # spot: true
     iam:
       withAddonPolicies:
@@ -98,12 +101,13 @@ nodeGroups:
 fargateProfiles:
   - name: fp-1
     selectors:
-      - namespace: game-2048
+      - namespace: default
         labels:
           run-with-fargate: "true"
 
 cloudWatch:
   clusterLogging:
+    # logRetentionInDays: 90
     enableTypes:
     - "api"
     - "audit"

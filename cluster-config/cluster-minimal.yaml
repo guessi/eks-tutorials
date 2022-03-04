@@ -6,6 +6,8 @@ metadata:
   region: us-east-1
   version: "1.21"
 
+# mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
+# - https://github.com/weaveworks/eksctl/issues/4891
 availabilityZones:
 - us-east-1a
 - us-east-1b
@@ -14,8 +16,16 @@ privateCluster:
   enabled: false
 
 vpc:
+  autoAllocateIPv6: false
+  cidr: 192.168.0.0/16
+  publicAccessCIDRs: ["0.0.0.0/0"] # you should configured a proper CIDR list here
+  manageSharedNodeSecurityGroupRules: true
   nat:
     gateway: HighlyAvailable # other options: Disable, Single (default)
+
+kubernetesNetworkConfig:
+  ipFamily: IPv4
+  serviceIPv4CIDR: 10.100.0.0/16
 
 iam:
   withOIDC: true
@@ -30,7 +40,7 @@ managedNodeGroups:
     instanceTypes:
     - "t3.small"
     # privateNetworking: true
-    # releaseVersion: "1.21.5-20220216" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # releaseVersion: "1.21.5-20220226" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
     # spot: true
     iam:
       withAddonPolicies:
@@ -39,10 +49,10 @@ managedNodeGroups:
         # - https://github.com/weaveworks/eksctl/issues/4675
         # albIngress: true
         awsLoadBalancerController: true
-        # appMesh: true
+        appMesh: true
         # appMeshPreview: true
         autoScaler: true
-        # certManager: true
+        certManager: true
         cloudWatch: true
         ebs: true
         # externalDNS: true
@@ -52,6 +62,7 @@ managedNodeGroups:
 
 cloudWatch:
   clusterLogging:
+    logRetentionInDays: 90
     enableTypes:
     # - "api"
     - "audit"
@@ -59,7 +70,7 @@ cloudWatch:
     # - "controllerManager"
     # - "scheduler"
 
-addons:
-  - name: vpc-cni
-  - name: coredns
-  - name: kube-proxy
+# addons:
+#   - name: vpc-cni
+#   - name: coredns
+#   - name: kube-proxy
