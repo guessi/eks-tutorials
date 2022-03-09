@@ -185,9 +185,9 @@ If you try to increase work load to pods and you will find out that HPA is not w
 Terminate all applications created earlier
 
 ```sh
-% kubectl delete -f ./examples/nginx-full-nlb.yaml
-% kubectl delete -f ./examples/nginx-full-alb.yaml
-% kubectl delete -f ./examples/nginx-full-clb.yaml
+% kubectl delete -f ./examples/nginx-full-nlb.yaml --ignore-not-found
+% kubectl delete -f ./examples/nginx-full-alb.yaml --ignore-not-found
+% kubectl delete -f ./examples/nginx-full-clb.yaml --ignore-not-found
 ```
 
 Terminate the EKS cluster
