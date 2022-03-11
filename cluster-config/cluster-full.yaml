@@ -18,11 +18,11 @@ privateCluster:
 vpc:
   autoAllocateIPv6: false
   cidr: 192.168.0.0/16
-  # will takes around 10 minutes to activate/deactive access endpoints
+  publicAccessCIDRs: ["0.0.0.0/0"] # you should configured a proper CIDR list here
+  manageSharedNodeSecurityGroupRules: true
   clusterEndpoints:
     privateAccess: false
     publicAccess: true
-  manageSharedNodeSecurityGroupRules: true
   nat:
     gateway: HighlyAvailable # other options: Disable, Single (default)
 
@@ -34,43 +34,53 @@ iam:
   withOIDC: true
 
 managedNodeGroups:
-  - name: managed-1
+  - name: mng-1
     amiFamily: AmazonLinux2
-    # instancePrefix: managed
     minSize: 2
     maxSize: 5
     volumeSize: 20
     instanceTypes:
     - "t3.small"
-    # privateNetworking: true
-    # releaseVersion: "1.21.5-20220226" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
-    # spot: true
+    enableDetailedMonitoring: true
+    privateNetworking: true
+    disableIMDSv1: true
+    # disablePodIMDS: false
+    # instancePrefix: managed
+    # releaseVersion: "1.21.5-20220309" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # volumeIOPS: 3000
+    # volumeThroughput: 125
+    # volumeType: gp3
+    spot: true
+    ssh:
+      allow: false
     iam:
       withAddonPolicies:
         # hint: "albIngress" have be set as deprecated after 0.84.0
         # - https://github.com/weaveworks/eksctl/pull/4738
         # - https://github.com/weaveworks/eksctl/issues/4675
-        # albIngress: true
-        awsLoadBalancerController: true
+        # albIngress: false
         appMesh: true
-        # appMeshPreview: true
+        appMeshPreview: false
         autoScaler: true
+        awsLoadBalancerController: true
         certManager: true
         cloudWatch: true
         ebs: true
-        # externalDNS: true
-        # fsx: true
-        # imageBuilder: true
-        # xRay: true
+        efs: false
+        externalDNS: false
+        fsx: false
+        imageBuilder: false
+        xRay: false
 
 nodeGroups:
-  - name: mixed-1
+  - name: ng-mixed-1
     amiFamily: AmazonLinux2
     # instancePrefix: mixed
     minSize: 2
     maxSize: 5
     volumeSize: 20
     instancesDistribution:
+      capacityRebalance: false
       instanceTypes:
       - "t3.small"
       maxPrice: 0.015
@@ -78,25 +88,36 @@ nodeGroups:
       onDemandPercentageAboveBaseCapacity: 50
       # spotInstancePools: 2
       spotAllocationStrategy: "capacity-optimized-prioritized"
-      capacityRebalance: false
+    containerRuntime: dockerd
+    enableDetailedMonitoring: true
+    privateNetworking: true
+    disableIMDSv1: true
+    # disablePodIMDS: false
+    # instancePrefix: managed
+    # releaseVersion: "1.21.5-20220309" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # volumeIOPS: 3000
+    # volumeThroughput: 125
+    # volumeType: gp3
+    ssh:
+      allow: false
     iam:
       withAddonPolicies:
         # hint: "albIngress" have be set as deprecated after 0.84.0
         # - https://github.com/weaveworks/eksctl/pull/4738
         # - https://github.com/weaveworks/eksctl/issues/4675
-        # albIngress: true
-        awsLoadBalancerController: true
+        # albIngress: false
         appMesh: true
-        # appMeshPreview: true
+        appMeshPreview: false
         autoScaler: true
+        awsLoadBalancerController: true
         certManager: true
         cloudWatch: true
         ebs: true
-        # externalDNS: true
-        # fsx: true
-        # imageBuilder: true
-        # xRay: true
-    # privateNetworking: true
+        efs: false
+        externalDNS: false
+        fsx: false
+        imageBuilder: false
+        xRay: false
 
 fargateProfiles:
   - name: fp-1
@@ -106,8 +127,8 @@ fargateProfiles:
           run-with-fargate: "true"
 
 cloudWatch:
-  clusterLogging:
-    # logRetentionInDays: 90
+  clusterLogging: # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+    logRetentionInDays: 90
     enableTypes:
     - "api"
     - "audit"
@@ -115,7 +136,7 @@ cloudWatch:
     - "controllerManager"
     - "scheduler"
 
-addons:
-  - name: vpc-cni
-  - name: coredns
-  - name: kube-proxy
+# addons:
+#   - name: vpc-cni
+#   - name: coredns
+#   - name: kube-proxy

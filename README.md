@@ -24,13 +24,13 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 
 ```sh
 % eksctl version
-0.84.0
+0.87.0
 
 % kubectl version --client --short
 Client Version: v1.23.4
 
 % helm version --short
-v3.8.0+gd141386
+v3.8.1+g5cb9af4
 ```
 
 ## Goals
@@ -57,66 +57,60 @@ Create EKS cluster with minimal setup (for demo purpose only)
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.84.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.87.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2022-XX-XX XX:XX:XX [ℹ]  nodegroup "managed-1" will use "" [AmazonLinux2/1.21]
+2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.21]
 2022-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.21
 2022-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with managed nodes
-2022-XX-XX XX:XX:XX [ℹ]  1 nodegroup (managed-1) was included (based on the include/exclude rules)
+2022-XX-XX XX:XX:XX [ℹ]  1 nodegroup (mng-1) was included (based on the include/exclude rules)
 2022-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 0 nodegroup stack(s)
 2022-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 1 managed nodegroup stack(s)
 2022-XX-XX XX:XX:XX [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=us-east-1 --cluster=eks-demo'
 2022-XX-XX XX:XX:XX [ℹ]  Kubernetes API endpoint access will use default of {publicAccess=true, privateAccess=false} for cluster "eks-demo" in "us-east-1"
-2022-XX-XX XX:XX:XX [ℹ]  configuring CloudWatch logging for cluster "eks-demo" in "us-east-1" (enabled types: audit & disabled types: api, authenticator, controllerManager, scheduler)
+2022-XX-XX XX:XX:XX [ℹ]  configuring CloudWatch logging for cluster "eks-demo" in "us-east-1" (enabled types: api, audit, authenticator, controllerManager, scheduler & no types disabled)
 2022-XX-XX XX:XX:XX [ℹ]
 2 sequential tasks: { create cluster control plane "eks-demo",
     2 sequential sub-tasks: {
         5 sequential sub-tasks: {
             wait for control plane to become ready,
+            update CloudWatch log retention,
             associate IAM OIDC provider,
-            no tasks,
+            2 sequential sub-tasks: {
+                create IAM role for serviceaccount "kube-system/aws-node",
+                create serviceaccount "kube-system/aws-node",
+            },
             restart daemonset "kube-system/aws-node",
-            1 task: { create addons },
         },
-        create managed nodegroup "managed-1",
+        create managed nodegroup "mng-1",
     }
 }
 2022-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-demo-cluster"
 2022-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-cluster"
 2022-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-cluster"
+2022-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
+2022-XX-XX XX:XX:XX [ℹ]  building iamserviceaccount stack "eksctl-eks-demo-addon-iamserviceaccount-kube-system-aws-node"
+2022-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-addon-iamserviceaccount-kube-system-aws-node"
+2022-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-addon-iamserviceaccount-kube-system-aws-node"
+2022-XX-XX XX:XX:XX [ℹ]  serviceaccount "kube-system/aws-node" already exists
+2022-XX-XX XX:XX:XX [ℹ]  updated serviceaccount "kube-system/aws-node"
 2022-XX-XX XX:XX:XX [ℹ]  daemonset "kube-system/aws-node" restarted
-2022-XX-XX XX:XX:XX [ℹ]  creating role using recommended policies
-2022-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-addon-vpc-cni"
-2022-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-addon-vpc-cni"
-2022-XX-XX XX:XX:XX [ℹ]  creating addon
-2022-XX-XX XX:XX:XX [ℹ]  successfully created addon
-2022-XX-XX XX:XX:XX [ℹ]  building managed nodegroup stack "eksctl-eks-demo-nodegroup-managed-1"
-2022-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-nodegroup-managed-1"
-2022-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-nodegroup-managed-1"
+2022-XX-XX XX:XX:XX [ℹ]  building managed nodegroup stack "eksctl-eks-demo-nodegroup-mng-1"
+2022-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-nodegroup-mng-1"
+2022-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-nodegroup-mng-1"
 2022-XX-XX XX:XX:XX [ℹ]  waiting for the control plane availability...
 2022-XX-XX XX:XX:XX [✔]  saved kubeconfig as "/Users/demoUser/.kube/config"
 2022-XX-XX XX:XX:XX [ℹ]  no tasks
 2022-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
-2022-XX-XX XX:XX:XX [ℹ]  nodegroup "managed-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-23-115.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-37-100.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "managed-1"
-2022-XX-XX XX:XX:XX [ℹ]  nodegroup "managed-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-23-115.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-37-100.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
-2022-XX-XX XX:XX:XX [ℹ]  creating addon
-2022-XX-XX XX:XX:XX [ℹ]  addon "coredns" active
-2022-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
-2022-XX-XX XX:XX:XX [ℹ]  creating addon
-2022-XX-XX XX:XX:XX [ℹ]  addon "kube-proxy" active
-
-# Don't report this issue, it's an known issue for eksctl 0.84.0, and will be solved after 0.86.0 release, ref: https://github.com/weaveworks/eksctl/pull/4834
-
-2022-XX-XX XX:XX:XX [✖]  unable to use kubectl with the EKS cluster (check 'kubectl version'): Unable to connect to the server: getting credentials: exec plugin is configured to use API version client.authentication.k8s.io/v1alpha1, plugin returned version client.authentication.k8s.io/v1beta1
-
+2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-165.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-91-97.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "mng-1"
+2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-165.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-91-97.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 2022-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
 </details>
@@ -125,9 +119,9 @@ Get EKS cluster nodes information
 
 ```sh
 % kubectl get nodes
-NAME                             STATUS   ROLES    AGE   VERSION
-ip-192-168-23-115.ec2.internal   Ready    <none>   35m   v1.21.5-eks-9017834
-ip-192-168-37-100.ec2.internal   Ready    <none>   34m   v1.21.5-eks-9017834
+NAME                              STATUS   ROLES    AGE     VERSION
+ip-192-168-121-165.ec2.internal   Ready    <none>   8m      v1.21.5-eks-9017834
+ip-192-168-91-97.ec2.internal     Ready    <none>   7m50s   v1.21.5-eks-9017834
 ```
 
 ### Goal 2: Deploy a simple application with Classic Load Balancer (CLB) on EKS cluster
