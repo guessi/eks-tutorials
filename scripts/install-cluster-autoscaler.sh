@@ -47,7 +47,7 @@ if [ $? -ne 0 ]; then
   echo "[debug] setup eks/cluster-autoscaler"
   helm upgrade \
     --namespace kube-system \
-    --install aws-load-balancer-controller \
+    --install cluster-autoscaler \
     autoscaler/cluster-autoscaler \
       --set "autoDiscovery.clusterName=${EKS_CLUSTER_NAME}"
 else
