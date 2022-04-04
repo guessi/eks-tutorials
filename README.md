@@ -24,7 +24,7 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 
 ```sh
 % eksctl version
-0.88.0
+0.90.0
 
 % kubectl version --client --short
 Client Version: v1.23.5
@@ -57,7 +57,7 @@ Create EKS cluster with minimal setup (for demo purpose only)
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.88.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.90.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19

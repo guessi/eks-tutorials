@@ -46,7 +46,7 @@ managedNodeGroups:
     disableIMDSv1: true
     # disablePodIMDS: false
     # instancePrefix: managed
-    # releaseVersion: "1.21.5-20220309" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # releaseVersion: "1.21.5-20220317" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
     # volumeIOPS: 3000
     # volumeThroughput: 125
     # volumeType: gp3
