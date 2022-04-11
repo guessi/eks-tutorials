@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: eks-demo
   region: us-east-1
-  version: "1.21"
+  version: "1.22" # required eksctl 0.92.0 for Amazon EKS 1.22
 
 # mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
 # - https://github.com/weaveworks/eksctl/issues/4891

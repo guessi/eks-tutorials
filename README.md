@@ -8,7 +8,7 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 
 ## Prerequisites
 
-- [Amazon EKS](https://aws.amazon.com/eks/) 1.19+
+- [Amazon EKS](https://aws.amazon.com/eks/) 1.20+
 - [eksctl](https://eksctl.io/) - The official CLI for Amazon EKS
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) - The Kubernetes command-line tool
 - [helm](https://helm.sh/) - The Kubernetes Package Manage
@@ -24,7 +24,7 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 
 ```sh
 % eksctl version
-0.90.0
+0.92.0
 
 % kubectl version --client --short
 Client Version: v1.23.5
@@ -57,12 +57,12 @@ Create EKS cluster with minimal setup (for demo purpose only)
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.90.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.92.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.21]
-2022-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.21
+2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.22]
+2022-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.22
 2022-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with managed nodes
 2022-XX-XX XX:XX:XX [ℹ]  1 nodegroup (mng-1) was included (based on the include/exclude rules)
 2022-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 0 nodegroup stack(s)
@@ -104,12 +104,12 @@ Create EKS cluster with minimal setup (for demo purpose only)
 2022-XX-XX XX:XX:XX [ℹ]  no tasks
 2022-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-165.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-91-97.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-119-129.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-71-79.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "mng-1"
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-165.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-91-97.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-119-129.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-71-79.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 2022-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
@@ -120,8 +120,8 @@ Get EKS cluster nodes information
 ```sh
 % kubectl get nodes
 NAME                              STATUS   ROLES    AGE     VERSION
-ip-192-168-121-165.ec2.internal   Ready    <none>   8m      v1.21.5-eks-9017834
-ip-192-168-91-97.ec2.internal     Ready    <none>   7m50s   v1.21.5-eks-9017834
+ip-192-168-119-129.ec2.internal   Ready    <none>   6m4s    v1.22.6-eks-7d68063
+ip-192-168-71-79.ec2.internal     Ready    <none>   5m55s   v1.22.6-eks-7d68063
 ```
 
 ### Goal 2: Deploy a simple application with Classic Load Balancer (CLB) on EKS cluster
