@@ -216,6 +216,7 @@ You may find some useful installation scripts for install addons to your cluster
 
 - AWS EBS CSI Driver
 - AWS EFS CSI Driver
+- AWS FSx CSI Driver
 - AWS Load Balancer Controller
 - Cluster AutoScaler
 - Metrics Server
