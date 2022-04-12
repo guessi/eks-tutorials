@@ -49,7 +49,7 @@ helm -n kube-system ls | grep -q 'aws-efs-csi-driver/aws-efs-csi-driver'
 
 if [ $? -ne 0 ]; then
   # TODO: nice to have regional image setup
-  echo "[debug] setup eks/cluster-autoscaler"
+  echo "[debug] setup aws-efs-csi-driver/aws-efs-csi-driver"
   helm upgrade \
     --namespace kube-system \
     --install aws-efs-csi-driver \
