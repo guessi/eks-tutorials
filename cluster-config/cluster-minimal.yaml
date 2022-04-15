@@ -53,24 +53,6 @@ managedNodeGroups:
     spot: true
     ssh:
       allow: false
-    iam:
-      withAddonPolicies:
-        # hint: "albIngress" have be set as deprecated after 0.84.0
-        # - https://github.com/weaveworks/eksctl/pull/4738
-        # - https://github.com/weaveworks/eksctl/issues/4675
-        # albIngress: false
-        appMesh: false
-        appMeshPreview: false
-        autoScaler: false
-        awsLoadBalancerController: false
-        certManager: false
-        cloudWatch: false
-        ebs: false
-        efs: false
-        externalDNS: false
-        fsx: false
-        imageBuilder: false
-        xRay: false
 
 cloudWatch:
   clusterLogging: # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
