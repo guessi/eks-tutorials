@@ -46,7 +46,7 @@ managedNodeGroups:
     disableIMDSv1: true
     # disablePodIMDS: false
     # instancePrefix: managed
-    # releaseVersion: "1.21.5-20220317" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # releaseVersion: "1.22.6-20220406" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
     # volumeIOPS: 3000
     # volumeThroughput: 125
     # volumeType: gp3
@@ -59,13 +59,13 @@ managedNodeGroups:
         # - https://github.com/weaveworks/eksctl/pull/4738
         # - https://github.com/weaveworks/eksctl/issues/4675
         # albIngress: false
-        appMesh: true
+        appMesh: false
         appMeshPreview: false
-        autoScaler: true
-        awsLoadBalancerController: true
-        certManager: true
-        cloudWatch: true
-        ebs: true
+        autoScaler: false
+        awsLoadBalancerController: false
+        certManager: false
+        cloudWatch: false
+        ebs: false
         efs: false
         externalDNS: false
         fsx: false
@@ -94,7 +94,7 @@ nodeGroups:
     disableIMDSv1: true
     # disablePodIMDS: false
     # instancePrefix: managed
-    # releaseVersion: "1.21.5-20220317" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
+    # releaseVersion: "1.22.6-20220406" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
     # volumeIOPS: 3000
     # volumeThroughput: 125
     # volumeType: gp3
@@ -106,13 +106,13 @@ nodeGroups:
         # - https://github.com/weaveworks/eksctl/pull/4738
         # - https://github.com/weaveworks/eksctl/issues/4675
         # albIngress: false
-        appMesh: true
+        appMesh: false
         appMeshPreview: false
-        autoScaler: true
-        awsLoadBalancerController: true
-        certManager: true
-        cloudWatch: true
-        ebs: true
+        autoScaler: false
+        awsLoadBalancerController: false
+        certManager: false
+        cloudWatch: false
+        ebs: false
         efs: false
         externalDNS: false
         fsx: false

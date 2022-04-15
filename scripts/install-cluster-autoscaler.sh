@@ -49,6 +49,8 @@ if [ $? -ne 0 ]; then
     --namespace kube-system \
     --install cluster-autoscaler \
     autoscaler/cluster-autoscaler \
+      --set rbac.serviceAccount.create=false \
+      --set rbac.serviceAccount.name=cluster-autoscaler \
       --set "autoDiscovery.clusterName=${EKS_CLUSTER_NAME}"
 else
   echo "[debug] found autoscaler/cluster-autoscaler"

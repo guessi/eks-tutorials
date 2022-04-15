@@ -50,7 +50,9 @@ if [ $? -ne 0 ]; then
   helm upgrade \
     --namespace kube-system \
     --install aws-fsx-csi-driver \
-    aws-fsx-csi-driver/aws-fsx-csi-driver
+    aws-fsx-csi-driver/aws-fsx-csi-driver \
+      --set controller.serviceAccount.create=false \
+      --set controller.serviceAccount.name=fsx-csi-controller-sa
 else
   echo "[debug] found aws-fsx-csi-driver/aws-fsx-csi-driver"
 fi
