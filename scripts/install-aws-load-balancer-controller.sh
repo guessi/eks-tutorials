@@ -14,9 +14,10 @@ EKS_CLUSTER_NAME="eks-demo"
 # 1.3.2        	v2.3.0
 # 1.3.3        	v2.3.1
 # 1.4.0        	v2.4.0
+# 1.4.1        	v2.4.1
 
-APP_VERSION="v2.4.0"
-CHART_VERSION="1.4.0"
+APP_VERSION="v2.4.1"
+CHART_VERSION="1.4.1"
 
 echo "[debug] detecting AWS Account ID"
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
