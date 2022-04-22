@@ -12,23 +12,23 @@ availabilityZones:
 - us-east-1a
 - us-east-1b
 
-privateCluster:
-  enabled: false
+# privateCluster:
+#   enabled: false
+
+# kubernetesNetworkConfig:
+#   ipFamily: IPv4
+#   serviceIPv4CIDR: 10.100.0.0/16
 
 vpc:
-  autoAllocateIPv6: false
   cidr: 192.168.0.0/16
   publicAccessCIDRs: ["0.0.0.0/0"] # you should configured a proper CIDR list here
-  manageSharedNodeSecurityGroupRules: true
-  clusterEndpoints:
-    privateAccess: false
-    publicAccess: true
   nat:
     gateway: HighlyAvailable # other options: Disable, Single (default)
-
-kubernetesNetworkConfig:
-  ipFamily: IPv4
-  serviceIPv4CIDR: 10.100.0.0/16
+  # autoAllocateIPv6: false
+  # manageSharedNodeSecurityGroupRules: true
+  # clusterEndpoints:
+  #   privateAccess: false
+  #   publicAccess: true
 
 iam:
   withOIDC: true
@@ -38,78 +38,58 @@ managedNodeGroups:
     amiFamily: AmazonLinux2
     minSize: 2
     maxSize: 5
+    desiredCapacity: 2
     volumeSize: 20
     instanceTypes:
     - "t3.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
-    # disablePodIMDS: false
-    # instancePrefix: managed
-    # releaseVersion: "1.22.6-20220406" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
-    # volumeIOPS: 3000
-    # volumeThroughput: 125
-    # volumeType: gp3
     spot: true
     ssh:
       allow: false
-    iam:
-      withAddonPolicies:
-        # hint: "albIngress" have be set as deprecated after 0.84.0
-        # - https://github.com/weaveworks/eksctl/pull/4738
-        # - https://github.com/weaveworks/eksctl/issues/4675
-        # albIngress: false
-        appMesh: false
-        appMeshPreview: false
-        autoScaler: false
-        awsLoadBalancerController: false
-        certManager: false
-        cloudWatch: false
-        ebs: false
-        efs: false
-        externalDNS: false
-        fsx: false
-        imageBuilder: false
-        xRay: false
 
-nodeGroups:
-  - name: ng-mixed-1
-    amiFamily: AmazonLinux2
-    # instancePrefix: mixed
-    minSize: 2
-    maxSize: 5
-    volumeSize: 20
-    instancesDistribution:
-      capacityRebalance: false
-      instanceTypes:
-      - "t3.small"
-      maxPrice: 0.015
-      onDemandBaseCapacity: 0
-      onDemandPercentageAboveBaseCapacity: 50
-      # spotInstancePools: 2
-      spotAllocationStrategy: "capacity-optimized-prioritized"
-    containerRuntime: dockerd
-    enableDetailedMonitoring: true
-    privateNetworking: true
-    disableIMDSv1: true
-    # disablePodIMDS: false
-    # instancePrefix: managed
-    # releaseVersion: "1.22.6-20220406" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
-    # volumeIOPS: 3000
-    # volumeThroughput: 125
-    # volumeType: gp3
-    ssh:
-      allow: false
+# nodeGroups:
+#   - name: ng-mixed-1
+#     amiFamily: AmazonLinux2
+#     # instancePrefix: mixed
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 20
+#     instancesDistribution:
+#       capacityRebalance: false
+#       instanceTypes:
+#       - "t3.small"
+#       maxPrice: 0.015
+#       onDemandBaseCapacity: 0
+#       onDemandPercentageAboveBaseCapacity: 50
+#       # spotInstancePools: 2
+#       spotAllocationStrategy: "capacity-optimized-prioritized"
+#     containerRuntime: dockerd
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     ssh:
+#       allow: false
 
-fargateProfiles:
-  - name: fp-1
-    selectors:
-      - namespace: default
-        labels:
-          run-with-fargate: "true"
+# fargateProfiles:
+#   - name: fp-1
+#     selectors:
+#       - namespace: default
+#       - namespace: kube-system
+#       - namespace: my-namespace
+#         labels:
+#           run-with-fargate: "true"
+
+# addons:
+#   - name: vpc-cni
+#   - name: coredns
+#   - name: kube-proxy
 
 cloudWatch:
-  clusterLogging: # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  clusterLogging:
     logRetentionInDays: 90
     enableTypes:
     - "api"
@@ -117,8 +97,3 @@ cloudWatch:
     - "authenticator"
     - "controllerManager"
     - "scheduler"
-
-# addons:
-#   - name: vpc-cni
-#   - name: coredns
-#   - name: kube-proxy

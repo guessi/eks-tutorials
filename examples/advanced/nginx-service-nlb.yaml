@@ -1,0 +1,23 @@
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   annotations:
+#     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+#     service.beta.kubernetes.io/aws-load-balancer-type: "external"
+#     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+#   labels:
+#     app: nginx
+#   name: nginx-service
+#   namespace: default
+# spec:
+#   ipFamilies:
+#   - IPv4
+#   ipFamilyPolicy: SingleStack
+#   ports:
+#   - name: http
+#     port: 80
+#     targetPort: 80
+#   selector:
+#     app: nginx
+#   type: LoadBalancer

@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    # Required annotations
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+
+    # (Optional) Additional annotation for complex configure (comma separated `stringList`)
+    # alb.ingress.kubernetes.io/certificate-arn: cert1-arn,cert2-arn
+
+    # (Optional) if you would like to serve 80 port as well
+    # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    # alb.ingress.kubernetes.io/ssl-redirect: "443"
+  name: nginx-ingress
+  namespace: default
+spec:
+  rules:
+  - host: entry1.example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: nginx-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix

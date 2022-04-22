@@ -6,29 +6,15 @@ metadata:
   region: us-east-1
   version: "1.22" # required eksctl 0.92.0 for Amazon EKS 1.22
 
-# mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
-# - https://github.com/weaveworks/eksctl/issues/4891
 availabilityZones:
 - us-east-1a
 - us-east-1b
 
-privateCluster:
-  enabled: false
-
 vpc:
-  autoAllocateIPv6: false
   cidr: 192.168.0.0/16
   publicAccessCIDRs: ["0.0.0.0/0"] # you should configured a proper CIDR list here
-  manageSharedNodeSecurityGroupRules: true
-  clusterEndpoints:
-    privateAccess: false
-    publicAccess: true
   nat:
     gateway: HighlyAvailable # other options: Disable, Single (default)
-
-kubernetesNetworkConfig:
-  ipFamily: IPv4
-  serviceIPv4CIDR: 10.100.0.0/16
 
 iam:
   withOIDC: true
@@ -38,24 +24,19 @@ managedNodeGroups:
     amiFamily: AmazonLinux2
     minSize: 2
     maxSize: 5
+    desiredCapacity: 2
     volumeSize: 20
     instanceTypes:
     - "t3.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
-    # disablePodIMDS: false
-    # instancePrefix: managed
-    # releaseVersion: "1.22.6-20220406" ref: https://docs.aws.amazon.com/eks/latest/userguide/eks-linux-ami-versions.html
-    # volumeIOPS: 3000
-    # volumeThroughput: 125
-    # volumeType: gp3
     spot: true
     ssh:
       allow: false
 
 cloudWatch:
-  clusterLogging: # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  clusterLogging:
     logRetentionInDays: 90
     enableTypes:
     - "api"
@@ -63,8 +44,3 @@ cloudWatch:
     - "authenticator"
     - "controllerManager"
     - "scheduler"
-
-# addons:
-#   - name: vpc-cni
-#   - name: coredns
-#   - name: kube-proxy
