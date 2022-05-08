@@ -45,11 +45,9 @@ aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text
 
 if [ $? -ne 0 ]; then
   echo "[debug] IAM policy 'AWSLoadBalancerControllerIAMPolicy' existance not found, creating"
-  curl -o aws-load-balancer-controller-policy.json \
-    https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/${APP_VERSION}/docs/install/iam_policy.json
   aws iam create-policy \
     --policy-name AWSLoadBalancerControllerIAMPolicy \
-    --policy-document file://aws-load-balancer-controller-policy.json
+    --policy-document file://policy.json
 else
   echo "[debug] found IAM policy 'AWSLoadBalancerControllerIAMPolicy'"
 fi

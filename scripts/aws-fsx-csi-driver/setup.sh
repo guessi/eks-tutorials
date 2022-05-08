@@ -27,7 +27,7 @@ if [ $? -ne 0 ]; then
   echo "[debug] IAM policy 'Amazon_FSx_Lustre_CSI_Driver' existance not found, creating"
   aws iam create-policy \
     --policy-name Amazon_FSx_Lustre_CSI_Driver \
-    --policy-document file://aws-fsx-csi-driver-policy.json
+    --policy-document file://policy.json
 else
   echo "[debug] found IAM policy 'Amazon_FSx_Lustre_CSI_Driver'"
 fi

@@ -7,16 +7,16 @@
         "iam:CreateServiceLinkedRole",
         "iam:AttachRolePolicy",
         "iam:PutRolePolicy"
-       ],
+      ],
       "Resource": "arn:aws:iam::*:role/aws-service-role/s3.data-source.lustre.fsx.amazonaws.com/*"
     },
     {
-      "Action":"iam:CreateServiceLinkedRole",
-      "Effect":"Allow",
-      "Resource":"*",
-      "Condition":{
-        "StringLike":{
-          "iam:AWSServiceName":[
+      "Action": "iam:CreateServiceLinkedRole",
+      "Effect": "Allow",
+      "Resource": "*",
+      "Condition": {
+        "StringLike": {
+          "iam:AWSServiceName": [
             "fsx.amazonaws.com"
           ]
         }
@@ -31,7 +31,10 @@
         "fsx:DescribeFileSystems",
         "fsx:TagResource"
       ],
-      "Resource": ["*"]
+      "Resource": [
+        "arn:aws:s3:::fsx-csi-bucket/*",
+        "arn:aws:s3:::fsx-csi-bucket"
+      ]
     }
   ]
 }

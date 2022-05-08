@@ -25,11 +25,9 @@ aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text
 
 if [ $? -ne 0 ]; then
   echo "[debug] IAM policy 'AmazonEKS_EFS_CSI_Driver_Policy' existance not found, creating"
-  curl -o aws-efs-csi-driver-policy.json \
-    https://raw.githubusercontent.com/kubernetes-sigs/aws-efs-csi-driver/v1.3.6/docs/iam-policy-example.json
   aws iam create-policy \
     --policy-name AmazonEKS_EFS_CSI_Driver_Policy \
-    --policy-document file://aws-efs-csi-driver-policy.json
+    --policy-document file://policy.json
 else
   echo "[debug] found IAM policy 'AmazonEKS_EFS_CSI_Driver_Policy'"
 fi

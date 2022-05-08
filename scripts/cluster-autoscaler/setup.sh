@@ -26,7 +26,7 @@ if [ $? -ne 0 ]; then
   echo "[debug] IAM policy 'AmazonEKSClusterAutoscalerPolicy' existance not found, creating"
   aws iam create-policy \
     --policy-name AmazonEKSClusterAutoscalerPolicy \
-    --policy-document file://cluster-autoscaler-policy.json
+    --policy-document file://policy.json
 else
   echo "[debug] found IAM policy 'AmazonEKSClusterAutoscalerPolicy'"
 fi
