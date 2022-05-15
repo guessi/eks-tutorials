@@ -2,6 +2,8 @@
 
 AWS_REGION="us-east-1"
 EKS_CLUSTER_NAME="eks-demo"
+POLICY_NAME="AWSLoadBalancerControllerIAMPolicy"
+SERVICE_ACCOUNT_NAME="aws-load-balancer-controller"
 
 # CHART VERSION	APP VERSION
 # ---------------------------
@@ -27,42 +29,42 @@ echo "[debug] detecting VPC ID"
 export VPC_ID=$(aws eks describe-cluster --name ${EKS_CLUSTER_NAME} --query 'cluster.resourcesVpcConfig.vpcId' --output text --region ${AWS_REGION})
 echo "[debug] VPC ID: ${VPC_ID}"
 
-echo "[debug] detecting chart repo [eks-charts] existance"
+echo "[debug] detecting chart repo existance"
 helm repo list | grep -q 'eks-charts'
 
 if [ $? -ne 0 ]; then
-  echo "[debug] setup chart repo [eks-charts]"
+  echo "[debug] setup chart repo"
   helm repo add eks https://aws.github.io/eks-charts || true
 else
-  echo "[debug] found chart repo [eks-charts]"
+  echo "[debug] found chart repo"
 fi
 
 echo "[debug] helm repo update"
-helm repo update
+helm repo update eks
 
-echo "[debug] detecting IAM policy 'AWSLoadBalancerControllerIAMPolicy' existance"
-aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text | grep 'AWSLoadBalancerControllerIAMPolicy'
+echo "[debug] detecting IAM policy existance"
+aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text | grep "${POLICY_NAME}"
 
 if [ $? -ne 0 ]; then
-  echo "[debug] IAM policy 'AWSLoadBalancerControllerIAMPolicy' existance not found, creating"
+  echo "[debug] IAM policy existance not found, creating"
   aws iam create-policy \
-    --policy-name AWSLoadBalancerControllerIAMPolicy \
+    --policy-name ${POLICY_NAME} \
     --policy-document file://policy.json
 else
-  echo "[debug] found IAM policy 'AWSLoadBalancerControllerIAMPolicy'"
+  echo "[debug] IAM policy existed"
 fi
 
-echo "[debug] ensure existance of IAM Service Account 'aws-load-balancer-controller'"
+echo "[debug] creating IAM Roles for Service Accounts"
 eksctl create iamserviceaccount \
   --namespace kube-system \
   --cluster ${EKS_CLUSTER_NAME} \
-  --name aws-load-balancer-controller \
-  --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AWSLoadBalancerControllerIAMPolicy \
-  --override-existing-serviceaccounts \
-  --approve
+  --name ${SERVICE_ACCOUNT_NAME} \
+  --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${POLICY_NAME} \
+  --approve \
+  --override-existing-serviceaccounts
 
-echo "[debug] detecting eks/aws-load-balancer-controller existance"
-helm -n kube-system ls | grep -q 'aws-load-balancer-controller'
+echo "[debug] detecting Helm resource existance"
+helm list --all-namespaces | grep -q 'aws-load-balancer-controller'
 
 if [ $? -ne 0 ]; then
   # TODO: nice to have regional image setup
@@ -72,12 +74,12 @@ if [ $? -ne 0 ]; then
     --install aws-load-balancer-controller \
     --version ${CHART_VERSION} \
     eks/aws-load-balancer-controller \
-      --set clusterName=${EKS_CLUSTER_NAME} \
       --set serviceAccount.create=false \
-      --set serviceAccount.name=aws-load-balancer-controller \
-      --set image.repository=602401143452.dkr.ecr.us-east-1.amazonaws.com/amazon/aws-load-balancer-controller \
+      --set serviceAccount.name=${SERVICE_ACCOUNT_NAME} \
+      --set image.repository=602401143452.dkr.ecr.${AWS_REGION}.amazonaws.com/amazon/aws-load-balancer-controller \
+      --set clusterName=${EKS_CLUSTER_NAME} \
       --set region=${AWS_REGION} \
       --set VpcId=${VPC_ID}
 else
-  echo "[debug] found eks/aws-load-balancer-controller"
+  echo "[debug] Helm resource existed"
 fi

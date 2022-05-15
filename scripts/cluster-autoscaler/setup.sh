@@ -1,47 +1,51 @@
 #!/usr/bin/env bash
 
+AWS_REGION="us-east-1"
 EKS_CLUSTER_NAME="eks-demo"
+POLICY_NAME="AmazonEKSClusterAutoscalerPolicy"
+SERVICE_ACCOUNT_NAME="cluster-autoscaler"
+CLUSTER_AUTOSCALER_IMAGE_TAG="v1.22.2"
 
 echo "[debug] detecting AWS Account ID"
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 echo "[debug] AWS Account ID: ${AWS_ACCOUNT_ID}"
 
-echo "[debug] detecting chart repo [autoscaler] existance"
+echo "[debug] detecting chart repo existance"
 helm repo list | grep -q 'autoscaler'
 
 if [ $? -ne 0 ]; then
-  echo "[debug] setup chart repo [autoscaler]"
+  echo "[debug] setup chart repo"
   helm repo add autoscaler https://kubernetes.github.io/autoscaler || true
 else
-  echo "[debug] found chart repo [autoscaler]"
+  echo "[debug] found chart repo"
 fi
 
 echo "[debug] helm repo update"
-helm repo update
+helm repo update autoscaler
 
-echo "[debug] detecting IAM policy 'AmazonEKSClusterAutoscalerPolicy' existance"
-aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text | grep 'AmazonEKSClusterAutoscalerPolicy'
+echo "[debug] detecting IAM policy existance"
+aws iam list-policies --query "Policies[].[PolicyName,UpdateDate]" --output text | grep "${POLICY_NAME}"
 
 if [ $? -ne 0 ]; then
-  echo "[debug] IAM policy 'AmazonEKSClusterAutoscalerPolicy' existance not found, creating"
+  echo "[debug] IAM policy existance not found, creating"
   aws iam create-policy \
-    --policy-name AmazonEKSClusterAutoscalerPolicy \
+    --policy-name ${POLICY_NAME} \
     --policy-document file://policy.json
 else
-  echo "[debug] found IAM policy 'AmazonEKSClusterAutoscalerPolicy'"
+  echo "[debug] IAM policy existed"
 fi
 
-echo "[debug] ensure existance of IAM Service Account 'cluster-autoscaler'"
+echo "[debug] creating IAM Roles for Service Accounts"
 eksctl create iamserviceaccount \
   --namespace kube-system \
   --cluster ${EKS_CLUSTER_NAME} \
-  --name cluster-autoscaler \
-  --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/AmazonEKSClusterAutoscalerPolicy \
-  --override-existing-serviceaccounts \
-  --approve
+  --name ${SERVICE_ACCOUNT_NAME} \
+  --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${POLICY_NAME} \
+  --approve \
+  --override-existing-serviceaccounts
 
-echo "[debug] detecting autoscaler/cluster-autoscaler existance"
-helm -n kube-system ls | grep -q 'cluster-autoscaler'
+echo "[debug] detecting Helm resource existance"
+helm list --all-namespaces | grep -q 'cluster-autoscaler'
 
 if [ $? -ne 0 ]; then
   echo "[debug] setup eks/cluster-autoscaler"
@@ -50,8 +54,10 @@ if [ $? -ne 0 ]; then
     --install cluster-autoscaler \
     autoscaler/cluster-autoscaler \
       --set rbac.serviceAccount.create=false \
-      --set rbac.serviceAccount.name=cluster-autoscaler \
-      --set "autoDiscovery.clusterName=${EKS_CLUSTER_NAME}"
+      --set rbac.serviceAccount.name=${SERVICE_ACCOUNT_NAME} \
+      --set autoDiscovery.clusterName=${EKS_CLUSTER_NAME} \
+      --set fullnameOverride="cluster-autoscaler" \
+      --set image.tag="${CLUSTER_AUTOSCALER_IMAGE_TAG}"
 else
-  echo "[debug] found autoscaler/cluster-autoscaler"
+  echo "[debug] Helm resource existed"
 fi
