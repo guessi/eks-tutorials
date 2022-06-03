@@ -58,3 +58,6 @@ if [ $? -ne 0 ]; then
 else
   echo "[debug] Helm resource existed"
 fi
+
+echo "[debug] listing installed"
+helm list --all-namespaces --filter aws-fsx-csi-driver
