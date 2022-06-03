@@ -17,9 +17,10 @@ SERVICE_ACCOUNT_NAME="aws-load-balancer-controller"
 # 1.3.3        	v2.3.1
 # 1.4.0        	v2.4.0
 # 1.4.1        	v2.4.1
+# 1.4.2        	v2.4.2
 
-APP_VERSION="v2.4.1"
-CHART_VERSION="1.4.1"
+APP_VERSION="v2.4.2"
+CHART_VERSION="1.4.2"
 
 echo "[debug] detecting AWS Account ID"
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
