@@ -1,0 +1,55 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: default
+spec:
+  limits:
+    resources:
+      cpu: 1000
+      memory: 1000Gi
+  requirements:
+  - key: karpenter.sh/capacity-type
+    operator: In
+    values:
+    - spot
+    # - on-demand
+  - key: kubernetes.io/arch
+    operator: In
+    values:
+    - amd64
+    # - arm64
+  - key: node.kubernetes.io/instance-type
+    operator: In
+    values:
+    # T2 family
+    - t2.small
+    - t2.medium
+    - t2.large
+    - t2.2xlarge
+    # T3 family
+    - t3.small
+    - t3.medium
+    - t3.large
+    - t3.2xlarge
+    # T3a family
+    - t3a.small
+    - t3a.medium
+    - t3a.large
+    - t3a.2xlarge
+  # - key: topology.kubernetes.io/zone
+  #   operator: In
+  #   values:
+  #   - us-east-1a
+  #   - us-east-1b
+  provider:
+    securityGroupSelector:
+      karpenter.sh/discovery: eks-demo
+    subnetSelector:
+      karpenter.sh/discovery: eks-demo
+    amiFamily: AL2
+    # instanceProfile: MyInstanceProfile
+    # launchTemplate: MyLaunchTemplate
+    tags:
+      karpenter: "true"
+  ttlSecondsAfterEmpty: 30
+  ttlSecondsUntilExpired: 2592000
