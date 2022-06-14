@@ -8,10 +8,11 @@ ROLE_NAME="${EKS_CLUSTER_NAME}-karpenter"
 
 # CHART VERSION	APP VERSION
 # ---------------------------
+# 0.11.0        	0.11.0
 # 0.10.1        	0.10.1
 
-APP_VERSION="0.10.1"
-CHART_VERSION="0.10.1"
+APP_VERSION="0.11.0"
+CHART_VERSION="0.11.0"
 
 echo "[debug] detecting AWS Account ID"
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)

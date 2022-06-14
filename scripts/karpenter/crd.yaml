@@ -18,24 +18,25 @@ spec:
     values:
     - amd64
     # - arm64
-  - key: node.kubernetes.io/instance-type
+  - key: karpenter.k8s.aws/instance.family
     operator: In
     values:
-    # T2 family
-    - t2.small
-    - t2.medium
-    - t2.large
-    - t2.2xlarge
-    # T3 family
-    - t3.small
-    - t3.medium
-    - t3.large
-    - t3.2xlarge
-    # T3a family
-    - t3a.small
-    - t3a.medium
-    - t3a.large
-    - t3a.2xlarge
+    - t2
+    - t3
+    - t3a
+  - key: karpenter.k8s.aws/instance.size
+    operator: NotIn
+    values:
+    - nano
+    - micro
+  # - key: node.kubernetes.io/instance-type
+  #   operator: In
+  #   values:
+  #   # T3 family
+  #   - t3.small
+  #   - t3.medium
+  #   - t3.large
+  #   - t3.2xlarge
   # - key: topology.kubernetes.io/zone
   #   operator: In
   #   values:
