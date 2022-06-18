@@ -18,13 +18,13 @@ spec:
     values:
     - amd64
     # - arm64
-  - key: karpenter.k8s.aws/instance.family
+  - key: karpenter.k8s.aws/instance-family
     operator: In
     values:
     - t2
     - t3
     - t3a
-  - key: karpenter.k8s.aws/instance.size
+  - key: karpenter.k8s.aws/instance-size
     operator: NotIn
     values:
     - nano
