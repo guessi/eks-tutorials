@@ -4,7 +4,7 @@ AWS_REGION="us-east-1"
 EKS_CLUSTER_NAME="eks-demo"
 POLICY_NAME="AmazonEKSClusterAutoscalerPolicy"
 SERVICE_ACCOUNT_NAME="cluster-autoscaler"
-CLUSTER_AUTOSCALER_IMAGE_TAG="v1.22.2"
+CLUSTER_AUTOSCALER_IMAGE_TAG="v1.22.3"
 
 echo "[debug] detecting AWS Account ID"
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
