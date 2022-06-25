@@ -38,6 +38,7 @@ fi
 echo "[debug] creating IAM Roles for Service Accounts"
 eksctl create iamserviceaccount \
   --namespace kube-system \
+  --region ${AWS_REGION} \
   --cluster ${EKS_CLUSTER_NAME} \
   --name ${SERVICE_ACCOUNT_NAME} \
   --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${POLICY_NAME} \
@@ -53,6 +54,7 @@ if [ $? -ne 0 ]; then
     --namespace kube-system \
     --install cluster-autoscaler \
     autoscaler/cluster-autoscaler \
+      --set awsRegion=${AWS_REGION} \
       --set rbac.serviceAccount.create=false \
       --set rbac.serviceAccount.name=${SERVICE_ACCOUNT_NAME} \
       --set autoDiscovery.clusterName=${EKS_CLUSTER_NAME} \

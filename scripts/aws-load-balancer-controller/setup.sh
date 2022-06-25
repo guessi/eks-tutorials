@@ -58,6 +58,7 @@ fi
 echo "[debug] creating IAM Roles for Service Accounts"
 eksctl create iamserviceaccount \
   --namespace kube-system \
+  --region ${AWS_REGION} \
   --cluster ${EKS_CLUSTER_NAME} \
   --name ${SERVICE_ACCOUNT_NAME} \
   --attach-policy-arn arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${POLICY_NAME} \

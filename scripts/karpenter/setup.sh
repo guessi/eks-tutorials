@@ -59,6 +59,7 @@ rm -vf cloudformation.yaml # cleanup
 echo "[debug] creating mapRole for aws-auth"
 eksctl create iamidentitymapping \
   --username "system:node:{{EC2PrivateDNSName}}" \
+  --region ${AWS_REGION} \
   --cluster "${EKS_CLUSTER_NAME}" \
   --arn "arn:aws:iam::${AWS_ACCOUNT_ID}:role/KarpenterNodeRole-${EKS_CLUSTER_NAME}" \
   --group "system:bootstrappers" \
@@ -67,6 +68,7 @@ eksctl create iamidentitymapping \
 echo "[debug] creating IAM Roles for Service Accounts"
 eksctl create iamserviceaccount \
   --namespace karpenter \
+  --region ${AWS_REGION} \
   --cluster ${EKS_CLUSTER_NAME} \
   --name ${SERVICE_ACCOUNT_NAME} \
   --role-name "${ROLE_NAME}" \
