@@ -49,7 +49,57 @@ managedNodeGroups:
     ssh:
       allow: false
 
+#   - name: containerd-1
+#     ami: ami-0d5cbb67678bc879c # amazon-eks-node-1.22-v20220620, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     amiFamily: AmazonLinux2
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 20
+#     instanceTypes:
+#     - "t3.small"
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     spot: true
+#     ssh:
+#       allow: false
+#     overrideBootstrapCommand: |
+#       #!/bin/bash
+#       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
+#
+#   - name: bottlerocker-1
+#     amiFamily: Bottlerocket
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 20
+#     instanceTypes:
+#     - "t3.small"
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     spot: true
+#     bottlerocket:
+#       enableAdminContainer: true
+#       settings:
+#         motd: "Hello, Bottlerocket ~!"
+#
 # nodeGroups:
+#   - name: ng-1
+#     instanceType: t3.small
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 20
+#     amiFamily: AmazonLinux2
+#     containerRuntime: containerd
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     ssh:
+#       allow: false
+#
 #   - name: ng-mixed-1
 #     amiFamily: AmazonLinux2
 #     # instancePrefix: mixed
@@ -66,7 +116,7 @@ managedNodeGroups:
 #       onDemandPercentageAboveBaseCapacity: 50
 #       # spotInstancePools: 2
 #       spotAllocationStrategy: "capacity-optimized-prioritized"
-#     containerRuntime: dockerd
+#     containerRuntime: containerd
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true

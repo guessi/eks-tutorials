@@ -36,6 +36,7 @@ managedNodeGroups:
       allow: false
 
 cloudWatch:
+  # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
   clusterLogging:
     logRetentionInDays: 90
     enableTypes:
