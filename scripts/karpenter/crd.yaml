@@ -27,8 +27,28 @@ spec:
   - key: karpenter.k8s.aws/instance-size
     operator: NotIn
     values:
+    # (avoid too small)
     - nano
     - micro
+    # (general)
+    # - medium
+    # - large
+    # - xlarge
+    - 2xlarge
+    - 3xlarge
+    - 4xlarge
+    - 6xlarge
+    - 8xlarge
+    # (avoid too large)
+    - 9xlarge
+    - 10xlarge
+    - 12xlarge
+    - 16xlarge
+    - 18xlarge
+    - 24xlarge
+    - 32xlarge
+    - 48xlarge
+    - metal
   # - key: node.kubernetes.io/instance-type
   #   operator: In
   #   values:
