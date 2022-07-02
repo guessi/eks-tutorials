@@ -50,7 +50,7 @@ managedNodeGroups:
       allow: false
 
 #   - name: containerd-1
-#     ami: ami-0d5cbb67678bc879c # amazon-eks-node-1.22-v20220620, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     ami: ami-0f80e6144aa24f34d # amazon-eks-node-1.22-v20220629, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
