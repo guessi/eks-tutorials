@@ -11,9 +11,13 @@ metadata:
     # (Optional) Additional annotation for complex configure (comma separated `stringList`)
     # alb.ingress.kubernetes.io/certificate-arn: cert1-arn,cert2-arn
 
-    # (Optional) if you would like to serve 80 port as well
+    # (Optional) Serve 80 port as well and make it redirect to 443
     # alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     # alb.ingress.kubernetes.io/ssl-redirect: "443"
+
+    # (Optional)
+    # alb.ingress.kubernetes.io/security-groups: sg-1,sg-2 (comma separated `stringList`)
+    # alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true" # required aws-load-balancer-controller v2.3.0+
   name: nginx-ingress
   namespace: default
 spec:
