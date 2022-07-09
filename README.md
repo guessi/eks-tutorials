@@ -26,7 +26,7 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 - Goal 3: Find out why Application Load Balancer (ALB) not working?
 - Goal 4: Find out why Horizontal Pod Autoscaling (HPA) not working?
 - Goal 5: HPA is working. Now I want to set Nginx replicas with `kubectl scale ...` but failed. Why?
-- Goal 6: Try to scale to `20`
+- Goal 6: Remove HPA and try to scale to `20` manually
 - Goal 7: Try to turn ALB entry from HTTP to HTTPS
 - Goal 8: How to switch to Network Load Balancer (NLB)?
 - Goal 9: Deployment a Pod with Persistent Volume
@@ -46,7 +46,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.103.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.105.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -93,12 +93,12 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2022-XX-XX XX:XX:XX [ℹ]  no tasks
 2022-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-125-105.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-69-255.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-124-28.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-95-73.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "mng-1"
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-125-105.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-69-255.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-124-28.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-95-73.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 2022-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
@@ -108,9 +108,9 @@ Verify the EKS nodes are running.
 
 ```sh
 % kubectl get nodes
-NAME                              STATUS   ROLES    AGE     VERSION
-ip-192-168-125-105.ec2.internal   Ready    <none>   2m18s   v1.22.6-eks-7d68063
-ip-192-168-69-255.ec2.internal    Ready    <none>   2m27s   v1.22.6-eks-7d68063
+NAME                             STATUS   ROLES    AGE     VERSION
+ip-192-168-124-28.ec2.internal   Ready    <none>   4m29s   v1.21.12-eks-5308cf7
+ip-192-168-95-73.ec2.internal    Ready    <none>   4m36s   v1.21.12-eks-5308cf7
 ```
 
 ### Goal 2: Deploy nginx with Application Load Balancer (ALB)
@@ -130,18 +130,18 @@ Make sure everything run as expected
 ```sh
 % kubectl get pods,deployments,hpa,service,ingress
 NAME                                    READY   STATUS    RESTARTS   AGE
-pod/nginx-deployment-7966d896c8-2fw82   1/1     Running   0          26s
-pod/nginx-deployment-7966d896c8-f276s   1/1     Running   0          26s
+pod/nginx-deployment-69c78cd8c6-bnh44   1/1     Running   0          11s
+pod/nginx-deployment-69c78cd8c6-n4l7p   1/1     Running   0          11s
 
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/nginx-deployment   2/2     2            2           29s
+deployment.apps/nginx-deployment   2/2     2            2           13s
 
 NAME                                            REFERENCE                     TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-horizontalpodautoscaler.autoscaling/nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2          29s
+horizontalpodautoscaler.autoscaling/nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        0          13s
 
 NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-service/kubernetes      ClusterIP   10.100.0.1       <none>        443/TCP        12m
-service/nginx-service   NodePort    10.100.140.137   <none>        80:30050/TCP   28s
+service/kubernetes      ClusterIP   10.100.0.1       <none>        443/TCP        15m
+service/nginx-service   NodePort    10.100.102.191   <none>        80:30753/TCP   11s
 
 NAME                                      CLASS    HOSTS                ADDRESS   PORTS   AGE
 ingress.networking.k8s.io/nginx-ingress   <none>   entry1.example.com             80      31s
@@ -152,15 +152,15 @@ ingress.networking.k8s.io/nginx-ingress   <none>   entry1.example.com           
 ```sh
 % kubectl get ingress nginx-ingress
 NAME            CLASS    HOSTS                ADDRESS   PORTS   AGE
-nginx-ingress   <none>   entry1.example.com             80      81s # <-------- why?
+nginx-ingress   <none>   entry1.example.com             80      81s # <-------- no address shown, why?
 ```
 
 After fixing the issue, you should be able to see command output as follow,
 
 ```sh
 % kubectl get ingress nginx-ingress
-NAME            CLASS    HOSTS                ADDRESS                                                                 PORTS   AGE
-nginx-ingress   <none>   entry1.example.com   k8s-default-nginxing-XXXXXXXXXX-XXXXXXXXX.us-east-1.elb.amazonaws.com   80      4m39s
+NAME            CLASS    HOSTS                ADDRESS                                     PORTS   AGE
+nginx-ingress   <none>   entry1.example.com   k8s-XXXXXXXXX.us-east-1.elb.amazonaws.com   80      4m39s
 ```
 
 Once the Load Balancer is created, you should be able to visit the application via the endpoint of load balancer with default `HTTP` protocol.
@@ -175,6 +175,14 @@ nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2 
 
 Did you aware that HPA is not working... why? :thinking:
 
+After you fixed the HPA issue, it should shown as follow
+
+```sh
+% kubectl get hpa nginx-hpa
+NAME        REFERENCE                     TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+nginx-hpa   Deployment/nginx-deployment   2%/80%    2         10        2          10m
+```
+
 ### Goal 5: HPA is working. Now I want to set Nginx replicas with `kubectl scale ...` but failed. Why?
 
 ```sh
@@ -184,7 +192,12 @@ deployment.apps/nginx-deployment scaled
 
 Why the Pod count not able to reach desired pod count `12` but quickly scale down back to `10`... why is that ?
 
-### Goal 6: Try to scale to `20`
+### Goal 6: Remove HPA and try to scale to `20` manually
+
+```sh
+% kubectl delete hpa nginx-hpa
+horizontalpodautoscaler.autoscaling "nginx-hpa" deleted
+```
 
 ```sh
 % kubectl get deployment
@@ -195,26 +208,26 @@ nginx-deployment   13/20   20           13          31m # <-------- stock at "13
 ```sh
 % kubectl get pods
 NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-7966d896c8-4mjsh   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-7568r   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-75rq9   1/1     Running   0          60s
-nginx-deployment-7966d896c8-7php6   1/1     Running   0          60s
-nginx-deployment-7966d896c8-99g54   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-ccdw8   1/1     Running   0          60s
-nginx-deployment-7966d896c8-d6h6t   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-grmll   1/1     Running   0          61s
-nginx-deployment-7966d896c8-ktfs9   1/1     Running   0          20m
-nginx-deployment-7966d896c8-ph95q   1/1     Running   0          60s
-nginx-deployment-7966d896c8-pt7x4   1/1     Running   0          60s
-nginx-deployment-7966d896c8-q475q   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-qq8mh   1/1     Running   0          60s
-nginx-deployment-7966d896c8-r75hj   1/1     Running   0          60s
-nginx-deployment-7966d896c8-rqpbk   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-sw6bt   0/1     Pending   0          60s # <-------- not running
-nginx-deployment-7966d896c8-tfxch   1/1     Running   0          20m
-nginx-deployment-7966d896c8-tngnm   1/1     Running   0          60s
-nginx-deployment-7966d896c8-wk6ct   1/1     Running   0          60s
-nginx-deployment-7966d896c8-xxsq9   1/1     Running   0          60s
+nginx-deployment-848df8ccf4-4q454   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-7j9l5   1/1     Running   0          15m
+nginx-deployment-848df8ccf4-99tbb   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-9ndx9   0/1     Pending   0          8m3s # <-------- Pending
+nginx-deployment-848df8ccf4-f82zc   0/1     Pending   0          8m3s # <-------- Pending
+nginx-deployment-848df8ccf4-fbk2t   0/1     Pending   0          8m3s # <-------- Pending
+nginx-deployment-848df8ccf4-gmqkd   1/1     Running   0          14m
+nginx-deployment-848df8ccf4-gscdm   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-jlv7q   0/1     Pending   0          8m3s # <-------- Pending
+nginx-deployment-848df8ccf4-jr9b9   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-jxbh9   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-rvpdn   0/1     Pending   0          8m3s # <-------- Pending
+nginx-deployment-848df8ccf4-t2kj9   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-vgk4h   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-vn6v5   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-x6qrj   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-x6tb9   0/1     Pending   0          8m3s # <-------- Pending
+nginx-deployment-848df8ccf4-xd4f8   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-xm5s9   1/1     Running   0          8m3s
+nginx-deployment-848df8ccf4-zkg5z   0/1     Pending   0          8m3s # <-------- Pending
 ```
 
 ### Goal 7: Try to turn ALB entry from HTTP to HTTPS
@@ -264,6 +277,9 @@ You may find some useful installation scripts for install addons to your cluster
 - AWS EFS CSI Driver
 - AWS FSx CSI Driver
 - AWS Load Balancer Controller
+- App Mesh Controller
+- Cert Manager
 - Cluster AutoScaler
+- Karpenter
 - Metrics Server
 </details>
