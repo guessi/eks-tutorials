@@ -4,7 +4,6 @@ kind: Ingress
 metadata:
   annotations:
     # Required annotations
-    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
 
@@ -17,6 +16,7 @@ metadata:
   name: nginx-ingress
   namespace: default
 spec:
+  ingressClassName: alb
   rules:
   - host: entry1.example.com
     http:
