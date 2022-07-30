@@ -266,20 +266,6 @@ Terminate the EKS cluster
 
 ### Bonus
 
-<details>
-<summary>Click here for bonus :mag:</summary>
+There's another repository with common used addons installation scripts:
 
-You may find some useful installation scripts for install addons to your cluster under "./scripts" folder.
-
-#### Supported Addons:
-
-- AWS EBS CSI Driver
-- AWS EFS CSI Driver
-- AWS FSx CSI Driver
-- AWS Load Balancer Controller
-- App Mesh Controller
-- Cert Manager
-- Cluster AutoScaler
-- Karpenter
-- Metrics Server
-</details>
+- https://github.com/guessi/eks-addons-quick-start
