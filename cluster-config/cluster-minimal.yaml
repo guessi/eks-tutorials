@@ -25,34 +25,16 @@ managedNodeGroups:
     minSize: 2
     maxSize: 5
     desiredCapacity: 2
-    volumeSize: 20
+    volumeSize: 30
     instanceTypes:
     - "t3.small"
+    - "t3a.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
     spot: true
     ssh:
       allow: false
-
-  # - name: containerd-1
-  #   ami: ami-0f80e6144aa24f34d # amazon-eks-node-1.22-v20220629, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
-  #   amiFamily: AmazonLinux2
-  #   minSize: 2
-  #   maxSize: 5
-  #   desiredCapacity: 2
-  #   volumeSize: 20
-  #   instanceTypes:
-  #   - "t3.small"
-  #   enableDetailedMonitoring: true
-  #   privateNetworking: true
-  #   disableIMDSv1: true
-  #   spot: true
-  #   ssh:
-  #     allow: false
-  #   overrideBootstrapCommand: |
-  #     #!/bin/bash
-  #     /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html

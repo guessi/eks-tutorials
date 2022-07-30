@@ -46,7 +46,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.105.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.107.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -93,12 +93,12 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2022-XX-XX XX:XX:XX [ℹ]  no tasks
 2022-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-124-28.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-95-73.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-75-113.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-99-9.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "mng-1"
 2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-124-28.ec2.internal" is ready
-2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-95-73.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-75-113.ec2.internal" is ready
+2022-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-99-9.ec2.internal" is ready
 2022-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 2022-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
@@ -109,8 +109,8 @@ Verify the EKS nodes are running.
 ```sh
 % kubectl get nodes
 NAME                             STATUS   ROLES    AGE     VERSION
-ip-192-168-124-28.ec2.internal   Ready    <none>   4m29s   v1.21.12-eks-5308cf7
-ip-192-168-95-73.ec2.internal    Ready    <none>   4m36s   v1.21.12-eks-5308cf7
+ip-192-168-75-113.ec2.internal   Ready    <none>   4m18s   v1.22.9-eks-810597c
+ip-192-168-99-9.ec2.internal     Ready    <none>   4m34s   v1.22.9-eks-810597c
 ```
 
 ### Goal 2: Deploy nginx with Application Load Balancer (ALB)

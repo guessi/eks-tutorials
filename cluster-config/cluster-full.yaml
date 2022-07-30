@@ -39,9 +39,10 @@ managedNodeGroups:
     minSize: 2
     maxSize: 5
     desiredCapacity: 2
-    volumeSize: 20
+    volumeSize: 30
     instanceTypes:
     - "t3.small"
+    - "t3a.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
@@ -50,14 +51,15 @@ managedNodeGroups:
       allow: false
 
 #   - name: containerd-1
-#     ami: ami-0f80e6144aa24f34d # amazon-eks-node-1.22-v20220629, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     ami: ami-01b1201bedb51ce5f # amazon-eks-node-1.22-v20220725, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
-#     volumeSize: 20
+#     volumeSize: 30
 #     instanceTypes:
 #     - "t3.small"
+#     - "t3a.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -73,9 +75,10 @@ managedNodeGroups:
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
-#     volumeSize: 20
+#     volumeSize: 30
 #     instanceTypes:
 #     - "t3.small"
+#     - "t3a.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -84,6 +87,12 @@ managedNodeGroups:
 #       enableAdminContainer: true
 #       settings:
 #         motd: "Hello, Bottlerocket ~!"
+#         kubernetes
+#           cluster-certificate:
+#           api-server:
+#           cluster-dns-ip:
+#           node-labels:
+#           node-taints:
 #
 # nodeGroups:
 #   - name: ng-1
@@ -91,7 +100,7 @@ managedNodeGroups:
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
-#     volumeSize: 20
+#     volumeSize: 30
 #     amiFamily: AmazonLinux2
 #     containerRuntime: containerd
 #     enableDetailedMonitoring: true
@@ -106,11 +115,12 @@ managedNodeGroups:
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
-#     volumeSize: 20
+#     volumeSize: 30
 #     instancesDistribution:
 #       capacityRebalance: false
 #       instanceTypes:
 #       - "t3.small"
+#       - "t3a.small"
 #       maxPrice: 0.015
 #       onDemandBaseCapacity: 0
 #       onDemandPercentageAboveBaseCapacity: 50
