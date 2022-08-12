@@ -46,12 +46,12 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.107.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.109.0-rc.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.22]
-2022-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.22
+2022-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.23]
+2022-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.23
 2022-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with managed nodes
 2022-XX-XX XX:XX:XX [ℹ]  1 nodegroup (mng-1) was included (based on the include/exclude rules)
 2022-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 0 nodegroup stack(s)
@@ -109,8 +109,8 @@ Verify the EKS nodes are running.
 ```sh
 % kubectl get nodes
 NAME                             STATUS   ROLES    AGE     VERSION
-ip-192-168-75-113.ec2.internal   Ready    <none>   4m18s   v1.22.9-eks-810597c
-ip-192-168-99-9.ec2.internal     Ready    <none>   4m34s   v1.22.9-eks-810597c
+ip-192-168-75-113.ec2.internal   Ready    <none>   4m18s   v1.23.7-eks-4721010
+ip-192-168-99-9.ec2.internal     Ready    <none>   4m34s   v1.23.7-eks-4721010
 ```
 
 ### Goal 2: Deploy nginx with Application Load Balancer (ALB)
