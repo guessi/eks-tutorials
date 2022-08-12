@@ -4,7 +4,9 @@ kind: ClusterConfig
 metadata:
   name: eks-demo
   region: us-east-1
-  version: "1.22"
+  # required eksctl 0.92.0 for Amazon EKS 1.22.
+  # required eksctl 0.109.0 for Amazon EKS 1.23.
+  version: "1.23"
 
 fargateProfiles:
   - name: default
