@@ -1,0 +1,53 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-demo-ipv6
+  region: us-east-1
+  version: "1.23"
+
+availabilityZones:
+- us-east-1a
+- us-east-1b
+
+kubernetesNetworkConfig:
+  ipFamily: IPv6
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: mng-1
+    amiFamily: AmazonLinux2
+    minSize: 2
+    maxSize: 5
+    desiredCapacity: 2
+    volumeSize: 30
+    instanceTypes:
+    - "t3.small"
+    - "t3a.small"
+    enableDetailedMonitoring: true
+    privateNetworking: true
+    disableIMDSv1: true
+    spot: true
+    ssh:
+      allow: false
+
+addons:
+  - name: kube-proxy
+    version: latest
+  - name: vpc-cni
+    version: latest
+  - name: coredns
+    version: latest
+
+cloudWatch:
+  # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  clusterLogging:
+    logRetentionInDays: 90
+    enableTypes:
+    - "api"
+    - "audit"
+    - "authenticator"
+    - "controllerManager"
+    - "scheduler"
