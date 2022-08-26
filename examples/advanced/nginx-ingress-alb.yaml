@@ -8,6 +8,9 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
 
+    # (Optional)
+    # alb.ingress.kubernetes.io/target-group-attributes: 'deregistration_delay.timeout_seconds=300'
+
     # (Optional) Additional annotation for complex configure (comma separated `stringList`)
     # alb.ingress.kubernetes.io/certificate-arn: cert1-arn,cert2-arn
 
