@@ -13,6 +13,9 @@ fargateProfiles:
     selectors:
       - namespace: default
       - namespace: kube-system
+    tags:
+      fargate_profile: default
+      cluster_name: eks-demo
 
 # addons:
 #   - name: vpc-cni
