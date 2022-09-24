@@ -9,13 +9,23 @@ metadata:
   version: "1.23"
 
 fargateProfiles:
-  - name: default
+  - name: karpenter
     selectors:
-      - namespace: default
-      - namespace: kube-system
+      - namespace: karpenter
+        labels:
+          app.kubernetes.io/name: karpenter
     tags:
-      fargate_profile: default
-      cluster_name: eks-demo
+      fargate: "true"
+      fargate_profile: "karpenter"
+
+  - name: kube-system-aws-load-balancer-controller
+    selectors:
+      - namespace: kube-system
+        labels:
+          app.kubernetes.io/name: aws-load-balancer-controller
+    tags:
+      fargate: "true"
+      fargate_profile: "kube-system-aws-load-balancer-controller"
 
 # addons:
 #   - name: vpc-cni

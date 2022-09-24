@@ -136,13 +136,23 @@ managedNodeGroups:
 #       allow: false
 
 # fargateProfiles:
-#   - name: fp-1
+#   - name: karpenter
 #     selectors:
-#       - namespace: default
-#       - namespace: kube-system
-#       - namespace: my-namespace
+#       - namespace: karpenter
 #         labels:
-#           run-with-fargate: "true"
+#           app.kubernetes.io/name: karpenter
+#     tags:
+#       fargate: "true"
+#       fargate_profile: "karpenter"
+#
+#   - name: kube-system-aws-load-balancer-controller
+#     selectors:
+#       - namespace: kube-system
+#         labels:
+#           app.kubernetes.io/name: aws-load-balancer-controller
+#     tags:
+#       fargate: "true"
+#       fargate_profile: "kube-system-aws-load-balancer-controller"
 
 # addons:
 #   - name: vpc-cni
