@@ -96,6 +96,24 @@ managedNodeGroups:
 #           node-labels:
 #           node-taints:
 #
+#   - name: mng-single-az
+#     amiFamily: AmazonLinux2
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 30
+#     instanceTypes:
+#     - "t3.small"
+#     - "t3a.small"
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     spot: true
+#     ssh:
+#       allow: false
+#     availabilityZones:
+#     - us-east-1a
+
 # nodeGroups:
 #   - name: ng-1
 #     instanceType: t3.small
