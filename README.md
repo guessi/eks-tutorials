@@ -14,14 +14,14 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 
 ### Assumptions
 
-- An AWS profile existed with name `default`, and `AdministratorAccess` permission configured
+- Your AWS Profile have proper permission configured.
 - All the tools required were setup properly
 - All the resources are under `us-east-1`
 - The cluster name would be `eks-demo`
 
 ## Guideline of the tutorial
 
-- Goal 1: Create EKS Cluster
+- Goal 1: Create EKS Cluster with `eksctl`
 - Goal 2: Deploy nginx with Application Load Balancer (ALB)
 - Goal 3: Find out why Application Load Balancer (ALB) not working?
 - Goal 4: Find out why Horizontal Pod Autoscaling (HPA) not working?
@@ -29,12 +29,10 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 - Goal 6: Remove HPA and try to scale to `20` manually
 - Goal 7: Try to turn ALB entry from HTTP to HTTPS
 - Goal 8: How to switch to Network Load Balancer (NLB)?
-- Goal 9: Deployment a Pod with Persistent Volume
-- Goal 10: Store data externally
-- Goal 11: Cleanup
+- Goal 9: Cleanup
 
 
-### Goal 1: Create EKS Cluster
+### Goal 1: Create EKS Cluster with `eksctl`
 
 Make sure you have latest `eksctl` installed and you should be able to create EKS cluster with minimal setup as follow.
 
@@ -46,7 +44,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.111.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.113.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -238,15 +236,7 @@ Service with `HTTP` is clearly unsafe, how to made it safe with `HTTPS`?
 
 If you solve can provision ALB then you should be able to create NLB as well. But how...? :thinking:
 
-### Goal 9: Deployment a Pod with Persistent Volume
-
-Pods are stateless by default, how to preserve data with Persistent Volume?
-
-### Goal 10: Store data externally
-
-What about accessing data storage over network?
-
-### Goal 11: Cleanup
+### Goal 9: Cleanup
 
 Terminate all resources that we created earlier.
 
