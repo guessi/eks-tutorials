@@ -44,7 +44,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.113.0
+2022-XX-XX XX:XX:XX [ℹ]  eksctl version 0.117.0
 2022-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2022-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -86,7 +86,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2022-XX-XX XX:XX:XX [ℹ]  building managed nodegroup stack "eksctl-eks-demo-nodegroup-mng-1"
 2022-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-nodegroup-mng-1"
 2022-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-nodegroup-mng-1"
-2022-XX-XX XX:XX:XX [ℹ]  waiting for the control plane availability...
+2022-XX-XX XX:XX:XX [ℹ]  waiting for the control plane to become ready
 2022-XX-XX XX:XX:XX [✔]  saved kubeconfig as "/Users/demoUser/.kube/config"
 2022-XX-XX XX:XX:XX [ℹ]  no tasks
 2022-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created

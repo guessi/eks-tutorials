@@ -43,7 +43,6 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
-    - "t3.small"
     - "t3a.small"
     enableDetailedMonitoring: true
     privateNetworking: true
@@ -53,14 +52,13 @@ managedNodeGroups:
       allow: false
 
 #   - name: containerd-1
-#     ami: ami-028df9f7b798ba67e # amazon-eks-node-1.23-v20220811, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     ami: ami-08f63d9569e4b9ea7 # amazon-eks-node-1.23-v20221101, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
-#     - "t3.small"
 #     - "t3a.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
@@ -79,7 +77,6 @@ managedNodeGroups:
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
-#     - "t3.small"
 #     - "t3a.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
@@ -103,7 +100,6 @@ managedNodeGroups:
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
-#     - "t3.small"
 #     - "t3a.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
@@ -139,7 +135,6 @@ managedNodeGroups:
 #     instancesDistribution:
 #       capacityRebalance: false
 #       instanceTypes:
-#       - "t3.small"
 #       - "t3a.small"
 #       maxPrice: 0.015
 #       onDemandBaseCapacity: 0

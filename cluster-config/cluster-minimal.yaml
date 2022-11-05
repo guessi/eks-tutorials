@@ -4,8 +4,6 @@ kind: ClusterConfig
 metadata:
   name: eks-demo
   region: us-east-1
-  # required eksctl 0.92.0 for Amazon EKS 1.22.
-  # required eksctl 0.109.0 for Amazon EKS 1.23.
   version: "1.23"
 
 availabilityZones:
@@ -14,9 +12,9 @@ availabilityZones:
 
 vpc:
   cidr: 192.168.0.0/16
-  publicAccessCIDRs: ["0.0.0.0/0"] # you should configured a proper CIDR list here
+  publicAccessCIDRs: ["0.0.0.0/0"]
   nat:
-    gateway: HighlyAvailable # other options: Disable, Single (default)
+    gateway: HighlyAvailable
 
 iam:
   withOIDC: true
@@ -29,7 +27,6 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
-    - "t3.small"
     - "t3a.small"
     enableDetailedMonitoring: true
     privateNetworking: true

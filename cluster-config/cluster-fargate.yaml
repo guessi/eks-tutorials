@@ -4,8 +4,6 @@ kind: ClusterConfig
 metadata:
   name: eks-demo
   region: us-east-1
-  # required eksctl 0.92.0 for Amazon EKS 1.22.
-  # required eksctl 0.109.0 for Amazon EKS 1.23.
   version: "1.23"
 
 fargateProfiles:
@@ -26,11 +24,6 @@ fargateProfiles:
     tags:
       fargate: "true"
       fargate_profile: "kube-system-aws-load-balancer-controller"
-
-# addons:
-#   - name: vpc-cni
-#   - name: coredns
-#   - name: kube-proxy
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
