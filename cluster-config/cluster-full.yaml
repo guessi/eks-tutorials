@@ -43,7 +43,10 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
+    - "t3a.medium"
     - "t3a.small"
+    - "t3.medium"
+    - "t3.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
@@ -59,7 +62,10 @@ managedNodeGroups:
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
+#     - "t3a.medium"
 #     - "t3a.small"
+#     - "t3.medium"
+#     - "t3.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -77,7 +83,10 @@ managedNodeGroups:
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
+#     - "t3a.medium"
 #     - "t3a.small"
+#     - "t3.medium"
+#     - "t3.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -100,7 +109,10 @@ managedNodeGroups:
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
+#     - "t3a.medium"
 #     - "t3a.small"
+#     - "t3.medium"
+#     - "t3.small"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -112,7 +124,7 @@ managedNodeGroups:
 
 # nodeGroups:
 #   - name: ng-1
-#     instanceType: t3.small
+#     instanceType: t3a.small
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
@@ -135,7 +147,10 @@ managedNodeGroups:
 #     instancesDistribution:
 #       capacityRebalance: false
 #       instanceTypes:
+#       - "t3a.medium"
 #       - "t3a.small"
+#       - "t3.medium"
+#       - "t3.small"
 #       maxPrice: 0.015
 #       onDemandBaseCapacity: 0
 #       onDemandPercentageAboveBaseCapacity: 50

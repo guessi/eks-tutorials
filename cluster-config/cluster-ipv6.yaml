@@ -24,7 +24,10 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
+    - "t3a.medium"
     - "t3a.small"
+    - "t3.medium"
+    - "t3.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
@@ -34,11 +37,8 @@ managedNodeGroups:
 
 addons:
   - name: kube-proxy
-    version: latest
   - name: vpc-cni
-    version: latest
   - name: coredns
-    version: latest
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
