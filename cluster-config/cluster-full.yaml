@@ -77,7 +77,7 @@ managedNodeGroups:
 #       #!/bin/bash
 #       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
 #
-#   - name: bottlerocker-1
+#   - name: bottlerocket-1
 #     amiFamily: Bottlerocket
 #     minSize: 2
 #     maxSize: 5
