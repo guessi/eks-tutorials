@@ -96,7 +96,7 @@ managedNodeGroups:
 #       enableAdminContainer: true
 #       settings:
 #         motd: "Hello, Bottlerocket ~!"
-#         kubernetes
+#         kubernetes:
 #           cluster-certificate:
 #           api-server:
 #           cluster-dns-ip:
