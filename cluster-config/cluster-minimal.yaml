@@ -27,16 +27,33 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
-    - "t3a.medium"
     - "t3a.small"
-    - "t3.medium"
-    - "t3.small"
+    - "t3a.medium"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
     spot: true
     ssh:
       allow: false
+
+fargateProfiles:
+  - name: karpenter
+    selectors:
+      - namespace: karpenter
+        labels:
+          app.kubernetes.io/name: karpenter
+    tags:
+      fargate: "true"
+      fargate_profile: "karpenter"
+
+  - name: aws-load-balancer-controller
+    selectors:
+      - namespace: kube-system
+        labels:
+          app.kubernetes.io/name: aws-load-balancer-controller
+    tags:
+      fargate: "true"
+      fargate_profile: "aws-load-balancer-controller"
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
