@@ -7,7 +7,8 @@ metadata:
   # required eksctl 0.92.0 for Amazon EKS 1.22.
   # required eksctl 0.109.0 for Amazon EKS 1.23.
   # required eksctl 0.120.0 for Amazon EKS 1.24.
-  version: "1.24"
+  # required eksctl 0.132.0 for Amazon EKS 1.25.
+  version: "1.25"
 
 # mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
 # - https://github.com/weaveworks/eksctl/issues/4891
