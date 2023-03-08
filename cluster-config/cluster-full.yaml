@@ -161,18 +161,6 @@ managedNodeGroups:
 #       - namespace: karpenter
 #         labels:
 #           app.kubernetes.io/name: karpenter
-#     tags:
-#       fargate: "true"
-#       fargate_profile: "karpenter"
-#
-#   - name: aws-load-balancer-controller
-#     selectors:
-#       - namespace: kube-system
-#         labels:
-#           app.kubernetes.io/name: aws-load-balancer-controller
-#     tags:
-#       fargate: "true"
-#       fargate_profile: "aws-load-balancer-controller"
 
 # addons:
 #   - name: vpc-cni

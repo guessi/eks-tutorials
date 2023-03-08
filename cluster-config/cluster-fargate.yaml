@@ -12,18 +12,6 @@ fargateProfiles:
       - namespace: karpenter
         labels:
           app.kubernetes.io/name: karpenter
-    tags:
-      fargate: "true"
-      fargate_profile: "karpenter"
-
-  - name: aws-load-balancer-controller
-    selectors:
-      - namespace: kube-system
-        labels:
-          app.kubernetes.io/name: aws-load-balancer-controller
-    tags:
-      fargate: "true"
-      fargate_profile: "aws-load-balancer-controller"
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
