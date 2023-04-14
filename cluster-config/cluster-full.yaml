@@ -11,6 +11,8 @@ metadata:
   name: eks-demo
   region: us-east-1
   version: "1.26"
+  tags:
+    karpenter.sh/discovery: eks-demo
 
 # mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
 # - https://github.com/weaveworks/eksctl/issues/4891
