@@ -44,13 +44,13 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.135.0
+2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.138.0
 2023-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.25]
-2023-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.25
-2023-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with Fargate profile and managed nodes
+2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.26]
+2023-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.26
+2023-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with managed nodes
 2023-XX-XX XX:XX:XX [ℹ]  1 nodegroup (mng-1) was included (based on the include/exclude rules)
 2023-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 0 nodegroup stack(s)
 2023-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 1 managed nodegroup stack(s)
@@ -60,10 +60,9 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2023-XX-XX XX:XX:XX [ℹ]
 2 sequential tasks: { create cluster control plane "eks-demo",
     2 sequential sub-tasks: {
-        6 sequential sub-tasks: {
+        5 sequential sub-tasks: {
             wait for control plane to become ready,
             update CloudWatch log retention,
-            create fargate profiles,
             associate IAM OIDC provider,
             2 sequential sub-tasks: {
                 create IAM role for serviceaccount "kube-system/aws-node",
@@ -78,8 +77,6 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2023-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-cluster"
 2023-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-cluster"
 2023-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
-2023-XX-XX XX:XX:XX [ℹ]  creating Fargate profile "karpenter" on EKS cluster "eks-demo"
-2023-XX-XX XX:XX:XX [ℹ]  created Fargate profile "karpenter" on EKS cluster "eks-demo"
 2023-XX-XX XX:XX:XX [ℹ]  building iamserviceaccount stack "eksctl-eks-demo-addon-iamserviceaccount-kube-system-aws-node"
 2023-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-addon-iamserviceaccount-kube-system-aws-node"
 2023-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-addon-iamserviceaccount-kube-system-aws-node"

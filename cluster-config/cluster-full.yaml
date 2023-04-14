@@ -1,14 +1,16 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
+# Basic requirements:
+# - To get Amazon 1.22 support, eksctl version should be >= 0.92.0
+# - To get Amazon 1.23 support, eksctl version should be >= 0.109.0
+# - To get Amazon 1.24 support, eksctl version should be >= 0.120.0
+# - To get Amazon 1.25 support, eksctl version should be >= 0.132.0
+# - To get Amazon 1.26 support, eksctl version should be >= 0.138.0
 metadata:
   name: eks-demo
   region: us-east-1
-  # required eksctl 0.92.0 for Amazon EKS 1.22.
-  # required eksctl 0.109.0 for Amazon EKS 1.23.
-  # required eksctl 0.120.0 for Amazon EKS 1.24.
-  # required eksctl 0.132.0 for Amazon EKS 1.25.
-  version: "1.25"
+  version: "1.26"
 
 # mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
 # - https://github.com/weaveworks/eksctl/issues/4891
