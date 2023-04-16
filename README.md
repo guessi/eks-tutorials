@@ -11,6 +11,7 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 - [eksctl](https://eksctl.io/) - The official CLI for Amazon EKS
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) - The Kubernetes command-line tool
 - [helm](https://helm.sh/) - The Kubernetes Package Manage
+- [Amazon EKS 1.23](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#kubernetes-1.23) or higher - To support `autoscaling/v2`, learn more at [KEP-2702](https://github.com/kubernetes/enhancements/tree/master/keps/sig-autoscaling/2702-graduate-hpa-api-to-GA).
 
 ### Assumptions
 
