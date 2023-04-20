@@ -7,7 +7,13 @@
 #     service.beta.kubernetes.io/aws-load-balancer-type: "external"
 #     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
 #     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
-#     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+#     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: tcp
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "5"
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "3"
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "10"
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "30"
 #   labels:
 #     app: nginx
 #   name: nginx-service
