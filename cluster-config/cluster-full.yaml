@@ -58,6 +58,12 @@ managedNodeGroups:
     spot: true
     ssh:
       allow: false
+    iam:
+      attachPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      # - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
 
 #   - name: containerd-1
 #     ami: ami-08f63d9569e4b9ea7 # amazon-eks-node-1.23-v20221101, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
