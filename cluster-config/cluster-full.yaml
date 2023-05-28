@@ -50,14 +50,16 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
-    - "t3a.small"
     - "t3a.medium"
+    - "t3.medium"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
     spot: true
     ssh:
       allow: false
+    # availabilityZones:
+    # - us-east-1a
     iam:
       attachPolicyARNs:
       - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
@@ -65,16 +67,16 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       # - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
 
-#   - name: containerd-1
-#     ami: ami-08f63d9569e4b9ea7 # amazon-eks-node-1.23-v20221101, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#   - name: customized-1
+#     ami: ami-0b94943bd76cb55c2 # amazon-eks-node-1.27-v20230526, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
-#     - "t3a.small"
 #     - "t3a.medium"
+#     - "t3.medium"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -92,8 +94,8 @@ managedNodeGroups:
 #     desiredCapacity: 2
 #     volumeSize: 30
 #     instanceTypes:
-#     - "t3a.small"
 #     - "t3a.medium"
+#     - "t3.medium"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -108,41 +110,9 @@ managedNodeGroups:
 #           cluster-dns-ip:
 #           node-labels:
 #           node-taints:
-#
-#   - name: mng-single-az
-#     amiFamily: AmazonLinux2
-#     minSize: 2
-#     maxSize: 5
-#     desiredCapacity: 2
-#     volumeSize: 30
-#     instanceTypes:
-#     - "t3a.small"
-#     - "t3a.medium"
-#     enableDetailedMonitoring: true
-#     privateNetworking: true
-#     disableIMDSv1: true
-#     spot: true
-#     ssh:
-#       allow: false
-#     availabilityZones:
-#     - us-east-1a
 
 # nodeGroups:
 #   - name: ng-1
-#     instanceType: t3a.small
-#     minSize: 2
-#     maxSize: 5
-#     desiredCapacity: 2
-#     volumeSize: 30
-#     amiFamily: AmazonLinux2
-#     containerRuntime: containerd
-#     enableDetailedMonitoring: true
-#     privateNetworking: true
-#     disableIMDSv1: true
-#     ssh:
-#       allow: false
-#
-#   - name: ng-mixed-1
 #     amiFamily: AmazonLinux2
 #     # instancePrefix: mixed
 #     minSize: 2
@@ -152,9 +122,9 @@ managedNodeGroups:
 #     instancesDistribution:
 #       capacityRebalance: false
 #       instanceTypes:
-#       - "t3a.small"
 #       - "t3a.medium"
-#       maxPrice: 0.015
+#       - "t3.medium"
+#       maxPrice: 0.0376 # t3a.medium
 #       onDemandBaseCapacity: 0
 #       onDemandPercentageAboveBaseCapacity: 50
 #       # spotInstancePools: 2

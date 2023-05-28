@@ -26,8 +26,8 @@ managedNodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     instanceTypes:
-    - "t3a.small"
     - "t3a.medium"
+    - "t3.medium"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
