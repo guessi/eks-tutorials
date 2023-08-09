@@ -2,7 +2,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 # Basic requirements:
-# - To get Amazon 1.22 support, eksctl version should be >= 0.92.0
+# - To get Amazon 1.22 support, eksctl version should be >= 0.92.0, <= 0.150.0
 # - To get Amazon 1.23 support, eksctl version should be >= 0.109.0
 # - To get Amazon 1.24 support, eksctl version should be >= 0.120.0
 # - To get Amazon 1.25 support, eksctl version should be >= 0.132.0
@@ -65,10 +65,10 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
       - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-      # - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation # optional
 
 #   - name: customized-1
-#     ami: ami-0b94943bd76cb55c2 # amazon-eks-node-1.27-v20230526, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     ami: ami-0bc4534a93057f9fb # amazon-eks-node-1.27-v20230728, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
