@@ -67,9 +67,29 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation # optional
 
-#   - name: customized-1
-#     ami: ami-0bc4534a93057f9fb # amazon-eks-node-1.27-v20230728, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#   - name: amazonlinux-1
+#     ami: ami-080632d422a0f7cc5 # amazon-eks-node-1.27-v20230816, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 30
+#     instanceTypes:
+#     - "t3a.medium"
+#     - "t3.medium"
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     spot: true
+#     ssh:
+#       allow: false
+#     overrideBootstrapCommand: |
+#       #!/bin/bash
+#       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
+#
+#   - name: ubuntu-1
+#     ami: ami-032a4564f2f4ba130 # ubuntu-eks/k8s_1.27/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230816, ref: https://cloud-images.ubuntu.com/aws-eks/
+#     amiFamily: Ubuntu2004
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
