@@ -45,7 +45,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.151.0
+2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.153.0
 2023-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -98,7 +98,8 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
 2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-75-113.ec2.internal" is ready
 2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-99-9.ec2.internal" is ready
-2023-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
+2023-XX-XX XX:XX:XX [✖]  parsing kubectl version string  (upstream error: ) / "0.0.0": Version string empty # Known issue, not big deal: https://github.com/eksctl-io/eksctl/issues/6970
+2023-XX-XX XX:XX:XX [ℹ]  cluster should be functional despite missing (or misconfigured) client binaries
 2023-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
 </details>
