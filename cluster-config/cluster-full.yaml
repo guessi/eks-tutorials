@@ -163,10 +163,10 @@ managedNodeGroups:
 #         labels:
 #           app.kubernetes.io/name: karpenter
 
-# addons:
-#   - name: vpc-cni
-#   - name: coredns
-#   - name: kube-proxy
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: kube-proxy
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
