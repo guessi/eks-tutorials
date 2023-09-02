@@ -14,9 +14,14 @@ availabilityZones:
 
 vpc:
   cidr: 192.168.0.0/16
-  publicAccessCIDRs: ["0.0.0.0/0"]
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
   nat:
     gateway: HighlyAvailable
+  publicAccessCIDRs: # you should configured a proper CIDR list here
+  - 0.0.0.0/0
 
 iam:
   withOIDC: true

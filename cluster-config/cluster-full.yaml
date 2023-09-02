@@ -30,14 +30,14 @@ kubernetesNetworkConfig:
 
 vpc:
   cidr: 192.168.0.0/16
-  publicAccessCIDRs: ["0.0.0.0/0"] # you should configured a proper CIDR list here
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
   nat:
     gateway: HighlyAvailable # other options: Disable, Single (default)
-  # autoAllocateIPv6: false
-  # manageSharedNodeSecurityGroupRules: true
-  # clusterEndpoints:
-  #   privateAccess: false
-  #   publicAccess: true
+  publicAccessCIDRs: # you should configured a proper CIDR list here
+  - 0.0.0.0/0
 
 iam:
   withOIDC: true

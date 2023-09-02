@@ -12,6 +12,12 @@ availabilityZones:
 - us-east-1a
 - us-east-1b
 
+vpc:
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
+
 kubernetesNetworkConfig:
   ipFamily: IPv6
 
