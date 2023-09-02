@@ -21,12 +21,12 @@ availabilityZones:
 - us-east-1a
 - us-east-1b
 
-# privateCluster:
-#   enabled: false
+privateCluster:
+  enabled: false
 
-# kubernetesNetworkConfig:
-#   ipFamily: IPv4
-#   serviceIPv4CIDR: 10.100.0.0/16
+kubernetesNetworkConfig:
+  ipFamily: IPv4
+  serviceIPv4CIDR: 10.100.0.0/16
 
 vpc:
   cidr: 192.168.0.0/16
