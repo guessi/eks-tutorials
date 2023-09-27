@@ -8,10 +8,11 @@ kind: ClusterConfig
 # - To get Amazon 1.25 support, eksctl version should be >= 0.132.0
 # - To get Amazon 1.26 support, eksctl version should be >= 0.138.0
 # - To get Amazon 1.27 support, eksctl version should be >= 0.143.0
+# - To get Amazon 1.28 support, eksctl version should be >= 0.160.0
 metadata:
   name: eks-demo
   region: us-east-1
-  version: "1.27"
+  version: "1.28"
   tags:
     karpenter.sh/discovery: eks-demo
 
