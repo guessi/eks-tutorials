@@ -13,6 +13,35 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 - [helm](https://helm.sh/) - The Kubernetes Package Manage
 - [Amazon EKS 1.23](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions-extended.html#kubernetes-1.23) or higher - To support `autoscaling/v2`, learn more at [KEP-2702](https://github.com/kubernetes/enhancements/tree/master/keps/sig-autoscaling/2702-graduate-hpa-api-to-GA).
 
+### `eksctl` version requirements
+
+<details>
+<summary>Click here :mag:</summary>
+
+- To get support for Amazon EKS 1.28
+    - support have been added after [eksctl-0.160.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.160.0) released.
+
+- To get support for Amazon EKS 1.27
+    - support have been added after [eksctl-0.143.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.143.0) released.
+
+- To get support for Amazon EKS 1.26
+    - support have been added after [eksctl-0.138.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.138.0) released.
+
+- To get support for Amazon EKS 1.25
+    - support have been added after [eksctl-0.132.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.132.0) released.
+
+- To get support for Amazon EKS 1.24
+    - support have been added after [eksctl-0.120.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.120.0) released.
+
+- To get support for Amazon EKS 1.23
+    - support have been added after [eksctl-0.109.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.109.0) released.
+
+- To get support for Amazon EKS 1.22
+    - support have been added after [eksctl-0.92.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.92.0) released.
+    - support have been removed after [eksctl-0.151.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.151.0) released.
+
+</details>
+
 ### Assumptions
 
 - Your AWS Profile have proper permission configured.
