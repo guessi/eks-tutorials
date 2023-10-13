@@ -74,7 +74,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.160.0-rc.0
+2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.162.0-rc.0
 2023-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -119,12 +119,12 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2023-XX-XX XX:XX:XX [ℹ]  no tasks
 2023-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
 2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-75-113.ec2.internal" is ready
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-99-9.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-104-74.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-71-34.ec2.internal" is ready
 2023-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "mng-1"
 2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-75-113.ec2.internal" is ready
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-99-9.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-104-74.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-71-34.ec2.internal" is ready
 2023-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
 2023-XX-XX XX:XX:XX [ℹ]  creating addon
 2023-XX-XX XX:XX:XX [ℹ]  addon "coredns" active
@@ -140,9 +140,9 @@ Verify the EKS nodes are running.
 
 ```sh
 % kubectl get nodes
-NAME                             STATUS   ROLES    AGE     VERSION
-ip-192-168-75-113.ec2.internal   Ready    <none>   4m18s   v1.27.4-eks-8ccc7ba
-ip-192-168-99-9.ec2.internal     Ready    <none>   4m34s   v1.27.4-eks-8ccc7ba
+NAME                             STATUS   ROLES    AGE   VERSION
+ip-192-168-104-74.ec2.internal   Ready    <none>   34m   v1.28.1-eks-43840fb
+ip-192-168-71-34.ec2.internal    Ready    <none>   34m   v1.28.1-eks-43840fb
 ```
 
 ### Goal 2: Deploy nginx with Application Load Balancer (ALB)
@@ -162,37 +162,37 @@ Make sure everything run as expected
 ```sh
 % kubectl get pods,deployments,hpa,service,ingress
 NAME                                    READY   STATUS    RESTARTS   AGE
-pod/nginx-deployment-69c78cd8c6-bnh44   1/1     Running   0          11s
-pod/nginx-deployment-69c78cd8c6-n4l7p   1/1     Running   0          11s
+pod/nginx-deployment-598bb489bf-jp7sq   1/1     Running   0          10s
+pod/nginx-deployment-598bb489bf-wqwbj   1/1     Running   0          10s
 
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/nginx-deployment   2/2     2            2           13s
+deployment.apps/nginx-deployment   2/2     2            2           12s
 
 NAME                                            REFERENCE                     TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-horizontalpodautoscaler.autoscaling/nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        0          13s
+horizontalpodautoscaler.autoscaling/nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        0          11s
 
-NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-service/kubernetes      ClusterIP   10.100.0.1       <none>        443/TCP        15m
-service/nginx-service   NodePort    10.100.102.191   <none>        80:30753/TCP   11s
+NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/kubernetes      ClusterIP   10.100.0.1      <none>        443/TCP        45m
+service/nginx-service   NodePort    10.100.26.244   <none>        80:30747/TCP   10s
 
-NAME                                      CLASS    HOSTS                ADDRESS   PORTS   AGE
-ingress.networking.k8s.io/nginx-ingress   <none>   entry1.example.com             80      31s
+NAME                                      CLASS   HOSTS                ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/nginx-ingress   alb     entry1.example.com             80      11s
 ```
 
 ### Goal 3: Find out why Application Load Balancer (ALB) not working?
 
 ```sh
 % kubectl get ingress nginx-ingress
-NAME            CLASS    HOSTS                ADDRESS   PORTS   AGE
-nginx-ingress   <none>   entry1.example.com             80      81s # <-------- no address shown, why?
+NAME            CLASS   HOSTS                ADDRESS   PORTS   AGE
+nginx-ingress   alb     entry1.example.com             80      35s # <-------- no address shown, why?
 ```
 
 After fixing the issue, you should be able to see command output as follow,
 
 ```sh
 % kubectl get ingress nginx-ingress
-NAME            CLASS    HOSTS                ADDRESS                                     PORTS   AGE
-nginx-ingress   <none>   entry1.example.com   k8s-XXXXXXXXX.us-east-1.elb.amazonaws.com   80      4m39s
+NAME            CLASS   HOSTS                ADDRESS                                                                  PORTS   AGE
+nginx-ingress   alb     entry1.example.com   k8s-default-nginxing-XXXXXXXXXX-XXXXXXXXXX.us-east-1.elb.amazonaws.com   80      2m41s
 ```
 
 Once the Load Balancer is created, you should be able to visit the application via the endpoint of load balancer with default `HTTP` protocol.
@@ -202,7 +202,7 @@ Once the Load Balancer is created, you should be able to visit the application v
 ```sh
 % kubectl get hpa nginx-hpa
 NAME        REFERENCE                     TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2          29s
+nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2          2m57s
 ```
 
 Did you aware that HPA is not working... why? :thinking:
@@ -212,7 +212,7 @@ After you fixed the HPA issue, it should shown as follow
 ```sh
 % kubectl get hpa nginx-hpa
 NAME        REFERENCE                     TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
-nginx-hpa   Deployment/nginx-deployment   2%/80%    2         10        2          10m
+nginx-hpa   Deployment/nginx-deployment   2%/80%    2         10        2          7m34s
 ```
 
 ### Goal 5: HPA is working. Now I want to set Nginx replicas with `kubectl scale ...` but failed. Why?
@@ -222,9 +222,9 @@ nginx-hpa   Deployment/nginx-deployment   2%/80%    2         10        2       
 deployment.apps/nginx-deployment scaled
 ```
 
-Why the Pod count not able to reach desired pod count `12` but quickly scale down back to `10`... why is that ?
+Why the Pod count not able to reach desired pod count `12` but quickly scale down back to `2`... why is that ?
 
-### Goal 6: Remove HPA and try to scale to `20` manually
+### Goal 6: Remove HPA and try to scale to `40` manually
 
 ```sh
 % kubectl delete hpa nginx-hpa
@@ -232,9 +232,14 @@ horizontalpodautoscaler.autoscaling "nginx-hpa" deleted
 ```
 
 ```sh
+% kubectl scale --replicas 40 deployment nginx-deployment
+deployment.apps/nginx-deployment scaled
+```
+
+```sh
 % kubectl get deployment
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   13/20   20           13          31m # <-------- stock at "13/20" ...why?
+nginx-deployment   25/40   40           25          10m <-------- stock at "25/40" ...why?
 ```
 
 ```sh
@@ -248,18 +253,7 @@ nginx-deployment-848df8ccf4-f82zc   0/1     Pending   0          8m3s # <-------
 nginx-deployment-848df8ccf4-fbk2t   0/1     Pending   0          8m3s # <-------- Pending
 nginx-deployment-848df8ccf4-gmqkd   1/1     Running   0          14m
 nginx-deployment-848df8ccf4-gscdm   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-jlv7q   0/1     Pending   0          8m3s # <-------- Pending
-nginx-deployment-848df8ccf4-jr9b9   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-jxbh9   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-rvpdn   0/1     Pending   0          8m3s # <-------- Pending
-nginx-deployment-848df8ccf4-t2kj9   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-vgk4h   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-vn6v5   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-x6qrj   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-x6tb9   0/1     Pending   0          8m3s # <-------- Pending
-nginx-deployment-848df8ccf4-xd4f8   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-xm5s9   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-zkg5z   0/1     Pending   0          8m3s # <-------- Pending
+... (omitted)
 ```
 
 ### Goal 7: Try to turn ALB entry from HTTP to HTTPS
