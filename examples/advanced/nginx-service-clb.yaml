@@ -1,5 +1,5 @@
 ###
-### WARNING - DO-NOT-USE - Classic Load Balancer is retiring
+### WARNING - DO-NOT-USE - Classic Load Balancer is no longer recommended
 ### Ref: https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/migrate-classic-load-balancer.html
 ###
 
