@@ -74,7 +74,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.162.0-rc.0
+2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.162.0
 2023-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
