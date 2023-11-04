@@ -1,0 +1,69 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-demo-local-zone
+  region: us-east-1
+  version: "1.28"
+  tags:
+    karpenter.sh/discovery: eks-demo-local-zone
+
+availabilityZones:
+- us-east-1a
+- us-east-1b
+
+vpc:
+  cidr: 192.168.0.0/16
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
+  nat:
+    gateway: HighlyAvailable
+  publicAccessCIDRs: # you should configured a proper CIDR list here
+  - 0.0.0.0/0
+  # id: "vpc-XXX"
+  # securityGroup: "sg-XXX"
+  # subnets:
+  #   public:
+  #     localzone-1:
+  #       az: "us-east-1-msp-1a"
+  #       id: "subnet-XXX"
+  #     localzone-2:
+  #       az: "us-east-1-msp-1a"
+  #       id: "subnet-XXX"
+
+iam:
+  withOIDC: true
+
+nodeGroups:
+  - name: ng-lz1
+    amiFamily: AmazonLinux2
+    minSize: 2
+    maxSize: 5
+    desiredCapacity: 2
+    volumeSize: 30
+    volumeType: gp2
+    instanceType: t3.medium
+    ssh:
+      allow: true
+      publicKeyName: "sshKeyName"
+    subnets:
+      - localzone-1
+      - localzone-2
+
+addons:
+  - name: vpc-cni
+  - name: coredns
+  - name: kube-proxy
+
+cloudWatch:
+  # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  clusterLogging:
+    logRetentionInDays: 90
+    enableTypes:
+    - "api"
+    - "audit"
+    - "authenticator"
+    - "controllerManager"
+    - "scheduler"
