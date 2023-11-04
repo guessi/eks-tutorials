@@ -31,6 +31,7 @@ managedNodeGroups:
     maxSize: 5
     desiredCapacity: 2
     volumeSize: 30
+    volumeType: gp3
     instanceTypes:
     - "t3a.medium"
     - "t3.medium"
