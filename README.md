@@ -286,4 +286,4 @@ Terminate the EKS cluster
 
 There's another repository with common used addons installation scripts:
 
-- https://github.com/guessi/eks-addons-quick-start
+- https://github.com/guessi/eks-integrations-quick-start
