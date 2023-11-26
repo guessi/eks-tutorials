@@ -58,8 +58,13 @@ managedNodeGroups:
       attachPolicyARNs:
       - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
       - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      # (Optional) Only required if you need "EC2 Instance Connect"
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation # optional
+      # (Optional) Only required if you are using "SSM"
+      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+      # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
+      - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
 
 #   - name: amazonlinux-1
 #     ami: ami-080632d422a0f7cc5 # amazon-eks-node-1.27-v20230816, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
@@ -163,8 +168,25 @@ managedNodeGroups:
 
 addons:
   - name: vpc-cni
+    version: latest
   - name: coredns
+    version: latest
   - name: kube-proxy
+    version: latest
+  - name: eks-pod-identity-agent
+    version: latest
+  - name: amazon-cloudwatch-observability
+    version: latest
+  - name: aws-ebs-csi-driver
+    version: latest
+    attachPolicyARNs:
+    - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+  - name: aws-efs-csi-driver
+    version: latest
+    attachPolicyARNs:
+    - arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy
+  - name: snapshot-controller
+    version: latest
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html

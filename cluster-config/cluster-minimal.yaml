@@ -47,13 +47,23 @@ managedNodeGroups:
       attachPolicyARNs:
       - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
       - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      # (Optional) Only required if you need "EC2 Instance Connect"
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
-      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation # optional
+      # (Optional) Only required if you are using "SSM"
+      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+      # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
+      - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
 
 addons:
   - name: vpc-cni
+    version: latest
   - name: coredns
+    version: latest
   - name: kube-proxy
+    version: latest
+  - name: eks-pod-identity-agent
+    version: latest
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html

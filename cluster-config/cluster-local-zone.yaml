@@ -54,8 +54,13 @@ nodeGroups:
 
 addons:
   - name: vpc-cni
+    version: latest
   - name: coredns
+    version: latest
   - name: kube-proxy
+    version: latest
+  - name: eks-pod-identity-agent
+    version: latest
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
