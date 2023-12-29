@@ -74,7 +74,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.162.0
+2023-XX-XX XX:XX:XX [ℹ]  eksctl version 0.167.0
 2023-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2023-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -119,18 +119,21 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2023-XX-XX XX:XX:XX [ℹ]  no tasks
 2023-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
 2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-104-74.ec2.internal" is ready
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-71-34.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-236.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-90-226.ec2.internal" is ready
 2023-XX-XX XX:XX:XX [ℹ]  waiting for at least 2 node(s) to become ready in "mng-1"
 2023-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-104-74.ec2.internal" is ready
-2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-71-34.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-236.ec2.internal" is ready
+2023-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-90-226.ec2.internal" is ready
 2023-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
 2023-XX-XX XX:XX:XX [ℹ]  creating addon
 2023-XX-XX XX:XX:XX [ℹ]  addon "coredns" active
 2023-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
 2023-XX-XX XX:XX:XX [ℹ]  creating addon
 2023-XX-XX XX:XX:XX [ℹ]  addon "kube-proxy" active
+2023-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
+2023-XX-XX XX:XX:XX [ℹ]  creating addon
+2023-XX-XX XX:XX:XX [ℹ]  addon "eks-pod-identity-agent" active
 2023-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 2023-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
@@ -140,9 +143,9 @@ Verify the EKS nodes are running.
 
 ```sh
 % kubectl get nodes
-NAME                             STATUS   ROLES    AGE   VERSION
-ip-192-168-104-74.ec2.internal   Ready    <none>   34m   v1.28.1-eks-43840fb
-ip-192-168-71-34.ec2.internal    Ready    <none>   34m   v1.28.1-eks-43840fb
+NAME                              STATUS   ROLES    AGE     VERSION
+ip-192-168-121-236.ec2.internal   Ready    <none>   5m47s   v1.28.3-eks-e71965b
+ip-192-168-90-226.ec2.internal    Ready    <none>   5m49s   v1.28.3-eks-e71965b
 ```
 
 ### Goal 2: Deploy nginx with Application Load Balancer (ALB)
@@ -162,21 +165,21 @@ Make sure everything run as expected
 ```sh
 % kubectl get pods,deployments,hpa,service,ingress
 NAME                                    READY   STATUS    RESTARTS   AGE
-pod/nginx-deployment-598bb489bf-jp7sq   1/1     Running   0          10s
-pod/nginx-deployment-598bb489bf-wqwbj   1/1     Running   0          10s
+pod/nginx-deployment-598bb489bf-c55jl   1/1     Running   0          35s
+pod/nginx-deployment-598bb489bf-x86dd   1/1     Running   0          35s
 
-NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/nginx-deployment   2/2     2            2           12s
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deployment    2/2     2            2           35s
 
 NAME                                            REFERENCE                     TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-horizontalpodautoscaler.autoscaling/nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        0          11s
+horizontalpodautoscaler.autoscaling/nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2          34s
 
 NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-service/kubernetes      ClusterIP   10.100.0.1      <none>        443/TCP        45m
-service/nginx-service   NodePort    10.100.26.244   <none>        80:30747/TCP   10s
+service/kubernetes      ClusterIP   10.100.0.1      <none>        443/TCP        16m
+service/nginx-service   NodePort    10.100.94.158   <none>        80:31251/TCP   34s
 
 NAME                                      CLASS   HOSTS                ADDRESS   PORTS   AGE
-ingress.networking.k8s.io/nginx-ingress   alb     entry1.example.com             80      11s
+ingress.networking.k8s.io/nginx-ingress   alb     entry1.example.com             80      35s
 ```
 
 ### Goal 3: Find out why Application Load Balancer (ALB) not working?
@@ -184,15 +187,15 @@ ingress.networking.k8s.io/nginx-ingress   alb     entry1.example.com            
 ```sh
 % kubectl get ingress nginx-ingress
 NAME            CLASS   HOSTS                ADDRESS   PORTS   AGE
-nginx-ingress   alb     entry1.example.com             80      35s # <-------- no address shown, why?
+nginx-ingress   alb     entry1.example.com             80      50s # <-------- no address shown, why?
 ```
 
 After fixing the issue, you should be able to see command output as follow,
 
 ```sh
 % kubectl get ingress nginx-ingress
-NAME            CLASS   HOSTS                ADDRESS                                                                  PORTS   AGE
-nginx-ingress   alb     entry1.example.com   k8s-default-nginxing-XXXXXXXXXX-XXXXXXXXXX.us-east-1.elb.amazonaws.com   80      2m41s
+NAME            CLASS   HOSTS                ADDRESS                                    PORTS   AGE
+nginx-ingress   alb     entry1.example.com   k8s-default-XXX.REGION.elb.amazonaws.com   80      60s
 ```
 
 Once the Load Balancer is created, you should be able to visit the application via the endpoint of load balancer with default `HTTP` protocol.
@@ -202,7 +205,7 @@ Once the Load Balancer is created, you should be able to visit the application v
 ```sh
 % kubectl get hpa nginx-hpa
 NAME        REFERENCE                     TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
-nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2          2m57s
+nginx-hpa   Deployment/nginx-deployment   <unknown>/80%   2         10        2          68s
 ```
 
 Did you aware that HPA is not working... why? :thinking:
@@ -212,7 +215,7 @@ After you fixed the HPA issue, it should shown as follow
 ```sh
 % kubectl get hpa nginx-hpa
 NAME        REFERENCE                     TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
-nginx-hpa   Deployment/nginx-deployment   2%/80%    2         10        2          7m34s
+nginx-hpa   Deployment/nginx-deployment   2%/80%    2         10        2          2m7s
 ```
 
 ### Goal 5: HPA is working. Now I want to set Nginx replicas with `kubectl scale ...` but failed. Why?
@@ -239,20 +242,18 @@ deployment.apps/nginx-deployment scaled
 ```sh
 % kubectl get deployment
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
-nginx-deployment   25/40   40           25          10m <-------- stock at "25/40" ...why?
+nginx-deployment   25/40   40           25          11m <-------- stock at "25/40" ...why?
 ```
 
 ```sh
 % kubectl get pods
 NAME                                READY   STATUS    RESTARTS   AGE
-nginx-deployment-848df8ccf4-4q454   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-7j9l5   1/1     Running   0          15m
-nginx-deployment-848df8ccf4-99tbb   1/1     Running   0          8m3s
-nginx-deployment-848df8ccf4-9ndx9   0/1     Pending   0          8m3s # <-------- Pending
-nginx-deployment-848df8ccf4-f82zc   0/1     Pending   0          8m3s # <-------- Pending
-nginx-deployment-848df8ccf4-fbk2t   0/1     Pending   0          8m3s # <-------- Pending
-nginx-deployment-848df8ccf4-gmqkd   1/1     Running   0          14m
-nginx-deployment-848df8ccf4-gscdm   1/1     Running   0          8m3s
+nginx-deployment-598bb489bf-c55jl   1/1     Running   0          6m15s
+nginx-deployment-598bb489bf-6tqb8   1/1     Running   0          13m
+nginx-deployment-598bb489bf-c55jl   1/1     Running   0          6m15s
+nginx-deployment-598bb489bf-d7pcg   0/1     Pending   0          6m15s # <-------- Pending
+nginx-deployment-598bb489bf-fw52n   0/1     Pending   0          6m15s # <-------- Pending
+nginx-deployment-598bb489bf-x86dd   0/1     Pending   0          6m15s # <-------- Pending
 ... (omitted)
 ```
 
