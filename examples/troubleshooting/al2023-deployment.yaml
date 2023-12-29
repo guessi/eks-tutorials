@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: al2023
+  name: al2023-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: al2023
+  template:
+    metadata:
+      labels:
+        app: al2023
+    spec:
+      containers:
+      - image: public.ecr.aws/amazonlinux/amazonlinux:2023
+        name: al2023
+        command: ["/bin/bash"]
+        args: ["-c", "while true; do echo dummy-for-keepalive; sleep 60; done"]
+      # serviceAccountName: hello
