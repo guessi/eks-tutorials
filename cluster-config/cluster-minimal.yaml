@@ -23,6 +23,9 @@ vpc:
   publicAccessCIDRs: # you should configured a proper CIDR list here
   - 0.0.0.0/0
 
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+
 iam:
   withOIDC: true
 

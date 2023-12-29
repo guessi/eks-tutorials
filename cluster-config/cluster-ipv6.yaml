@@ -21,6 +21,9 @@ vpc:
 kubernetesNetworkConfig:
   ipFamily: IPv6
 
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+
 iam:
   withOIDC: true
 

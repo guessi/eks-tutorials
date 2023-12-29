@@ -33,6 +33,9 @@ vpc:
   #       az: "us-east-1-msp-1a"
   #       id: "subnet-XXX"
 
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+
 iam:
   withOIDC: true
 

@@ -32,8 +32,17 @@ vpc:
   publicAccessCIDRs: # you should configured a proper CIDR list here
   - 0.0.0.0/0
 
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+
 iam:
   withOIDC: true
+  # podIdentityAssociations:
+  # - namespace: kube-system
+  #   serviceAccountName: ebs-csi-controller-sa-self-managed
+  #   roleName: pod-identity-role-for-ebs-csi-controller-self-managed
+  #   permissionPolicyARNs:
+  #     - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
 
 managedNodeGroups:
   - name: mng-1
