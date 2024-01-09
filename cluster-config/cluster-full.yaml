@@ -76,7 +76,7 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
 
 #   - name: amazonlinux-1
-#     ami: ami-080632d422a0f7cc5 # amazon-eks-node-1.27-v20230816, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     ami: ami-0d881c8e9d4844a86 # amazon-eks-node-1.28-v20231230, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
@@ -97,7 +97,7 @@ managedNodeGroups:
 #       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
 #
 #   - name: ubuntu-1
-#     ami: ami-032a4564f2f4ba130 # ubuntu-eks/k8s_1.27/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20230816, ref: https://cloud-images.ubuntu.com/aws-eks/
+#     ami: ami-0da0e0ebf36ec0c2c # ubuntu-eks/k8s_1.28/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231213.1, ref: https://cloud-images.ubuntu.com/aws-eks/
 #     amiFamily: Ubuntu2004
 #     minSize: 2
 #     maxSize: 5
