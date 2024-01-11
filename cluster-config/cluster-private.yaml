@@ -1,0 +1,64 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: fully-private
+  region: us-east-1
+  version: "1.28"
+
+availabilityZones:
+- us-east-1a
+- us-east-1b
+
+privateCluster:
+  enabled: true
+
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+
+iam:
+  withOIDC: true
+
+managedNodeGroups:
+  - name: mng-1
+    amiFamily: AmazonLinux2
+    minSize: 2
+    maxSize: 5
+    desiredCapacity: 2
+    volumeSize: 30
+    volumeType: gp3
+    instanceTypes:
+    - "m5.large"
+    enableDetailedMonitoring: true
+    privateNetworking: true
+    disableIMDSv1: true
+    spot: true
+    ssh:
+      allow: false
+    iam:
+      attachPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      # (Optional) Only required if you need "EC2 Instance Connect"
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      # (Optional) Only required if you are using "SSM"
+      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+
+addons:
+  - name: vpc-cni
+    version: latest
+  - name: coredns
+    version: latest
+  - name: kube-proxy
+    version: latest
+
+cloudWatch:
+  # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  clusterLogging:
+    logRetentionInDays: 90
+    enableTypes:
+    - "api"
+    - "audit"
+    - "authenticator"
+    - "controllerManager"
+    - "scheduler"
