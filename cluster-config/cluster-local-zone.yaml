@@ -47,7 +47,7 @@ nodeGroups:
     desiredCapacity: 2
     volumeSize: 30
     volumeType: gp2
-    instanceType: t3.medium
+    instanceType: t3.small # Local Zone have no "t3a", https://aws.amazon.com/about-aws/global-infrastructure/localzones/features/
     ssh:
       allow: true
       publicKeyName: "sshKeyName"

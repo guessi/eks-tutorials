@@ -28,7 +28,7 @@ managedNodeGroups:
     volumeSize: 30
     volumeType: gp3
     instanceTypes:
-    - "m5.large"
+    - "t3a.small"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
