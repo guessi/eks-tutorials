@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: eks-demo
   region: us-east-1
-  version: "1.28"
+  version: "1.29"
   tags:
     karpenter.sh/discovery: eks-demo
 
@@ -75,7 +75,9 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
 
 #   - name: amazonlinux-1
-#     ami: ami-0d881c8e9d4844a86 # amazon-eks-node-1.28-v20231230, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     # AWS CLI:
+#     # $ aws ec2 describe-images --image-ids $(aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.29/amazon-linux-2/recommended/image_id --query "Parameter.Value" --output text)
+#     ami: ami-0c482d7ce1aa0dd44 # amazon-eks-node-1.29-v20240117, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5
@@ -95,6 +97,8 @@ managedNodeGroups:
 #       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
 #
 #   - name: ubuntu-1
+#     # AWS CLI:
+#     # $ aws ec2 describe-images --owners 099720109477 --filters "Name=name,Values=ubuntu-eks/k8s_1.28/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-2024*"
 #     ami: ami-0da0e0ebf36ec0c2c # ubuntu-eks/k8s_1.28/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-20231213.1, ref: https://cloud-images.ubuntu.com/aws-eks/
 #     amiFamily: Ubuntu2004
 #     minSize: 2

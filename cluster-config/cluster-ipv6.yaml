@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: eks-demo-ipv6
   region: us-east-1
-  version: "1.28"
+  version: "1.29"
   tags:
     karpenter.sh/discovery: eks-demo-ipv6
 
