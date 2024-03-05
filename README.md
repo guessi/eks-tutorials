@@ -77,11 +77,11 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.169.0
+2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.173.0
 2024-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2024-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.28]
+2024-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.29]
 2024-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.29
 2024-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with managed nodes
 2024-XX-XX XX:XX:XX [ℹ]  1 nodegroup (mng-1) was included (based on the include/exclude rules)
