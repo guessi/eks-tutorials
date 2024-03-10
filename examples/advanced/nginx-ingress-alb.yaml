@@ -7,9 +7,6 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
 
-    # (Optional)
-    # alb.ingress.kubernetes.io/target-group-attributes: 'deregistration_delay.timeout_seconds=300'
-
     # (Optional) Additional annotation for complex configure (comma separated `stringList`)
     # alb.ingress.kubernetes.io/certificate-arn: cert1-arn,cert2-arn
 
@@ -20,6 +17,13 @@ metadata:
     # (Optional)
     # alb.ingress.kubernetes.io/security-groups: sg-1,sg-2 (comma separated `stringList`)
     # alb.ingress.kubernetes.io/manage-backend-security-group-rules: "true" # required aws-load-balancer-controller v2.3.0+
+
+    # (Optional) Custom attributes
+    # Load Balancer Attributes
+    # - https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/guide/ingress/annotations/#custom-attributes
+    # - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#load-balancer-attributes
+    # Target Group Attributes
+    # - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes
   name: nginx-ingress
   namespace: default
 spec:
