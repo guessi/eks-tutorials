@@ -77,7 +77,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.175.0
+2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.177.0
 2024-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -121,6 +121,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2024-XX-XX XX:XX:XX [✔]  saved kubeconfig as "/Users/demoUser/.kube/config"
 2024-XX-XX XX:XX:XX [ℹ]  no tasks
 2024-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-demo" have been created
+2024-XX-XX XX:XX:XX [✔]  created 0 nodegroup(s) in cluster "eks-demo"
 2024-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
 2024-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-236.ec2.internal" is ready
 2024-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-90-226.ec2.internal" is ready
@@ -128,6 +129,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2024-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" has 2 node(s)
 2024-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-236.ec2.internal" is ready
 2024-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-90-226.ec2.internal" is ready
+2024-XX-XX XX:XX:XX [✔]  created 1 managed nodegroup(s) in cluster "eks-demo"
 2024-XX-XX XX:XX:XX [ℹ]  no recommended policies found, proceeding without any IAM
 2024-XX-XX XX:XX:XX [ℹ]  creating addon
 2024-XX-XX XX:XX:XX [ℹ]  addon "coredns" active
