@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: fully-private
   region: us-east-1
-  version: "1.29"
+  version: "1.30"
 
 availabilityZones:
 - us-east-1a
