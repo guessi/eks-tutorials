@@ -148,7 +148,7 @@ managedNodeGroups:
 # fargateProfiles:
 #   - name: karpenter
 #     selectors:
-#       - namespace: karpenter
+#       - namespace: kube-system
 #         labels:
 #           app.kubernetes.io/name: karpenter
 
