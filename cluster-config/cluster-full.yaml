@@ -2,11 +2,11 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: eks-demo
+  name: eks-demo-full
   region: us-east-1
   version: "1.30"
   tags:
-    karpenter.sh/discovery: eks-demo
+    karpenter.sh/discovery: eks-demo-full
 
 # mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
 # - https://github.com/weaveworks/eksctl/issues/4891
@@ -146,19 +146,20 @@ managedNodeGroups:
 #     ssh:
 #       allow: false
 
-# fargateProfiles:
-#   - name: karpenter
-#     selectors:
-#       - namespace: kube-system
-#         labels:
-#           app.kubernetes.io/name: karpenter
+fargateProfiles:
+  - name: karpenter
+    selectors:
+      - namespace: kube-system
+        labels:
+          app.kubernetes.io/name: karpenter
 
 addons:
+  - name: kube-proxy
+    version: latest
   - name: vpc-cni
     version: latest
+    useDefaultPodIdentityAssociations: true
   - name: coredns
-    version: latest
-  - name: kube-proxy
     version: latest
   - name: eks-pod-identity-agent
     version: latest
@@ -166,12 +167,10 @@ addons:
     version: latest
   - name: aws-ebs-csi-driver
     version: latest
-    attachPolicyARNs:
-    - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+    useDefaultPodIdentityAssociations: true
   - name: aws-efs-csi-driver
     version: latest
-    attachPolicyARNs:
-    - arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy
+    useDefaultPodIdentityAssociations: true
   - name: snapshot-controller
     version: latest
 

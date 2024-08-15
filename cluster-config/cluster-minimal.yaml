@@ -66,11 +66,12 @@ fargateProfiles:
           app.kubernetes.io/name: karpenter
 
 addons:
+  - name: kube-proxy
+    version: latest
   - name: vpc-cni
     version: latest
+    useDefaultPodIdentityAssociations: true
   - name: coredns
-    version: latest
-  - name: kube-proxy
     version: latest
   - name: eks-pod-identity-agent
     version: latest

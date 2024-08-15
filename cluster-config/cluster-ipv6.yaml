@@ -50,6 +50,7 @@ addons:
     version: latest
   - name: vpc-cni
     version: latest
+    useDefaultPodIdentityAssociations: true
   - name: coredns
     version: latest
   - name: eks-pod-identity-agent

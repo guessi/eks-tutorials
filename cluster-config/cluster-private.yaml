@@ -46,13 +46,26 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       # (Optional) Only required if you are using "SSM"
       - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+      # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
+      - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+
+fargateProfiles:
+  - name: karpenter
+    selectors:
+      - namespace: kube-system
+        labels:
+          app.kubernetes.io/name: karpenter
 
 addons:
+  - name: kube-proxy
+    version: latest
   - name: vpc-cni
     version: latest
+    useDefaultPodIdentityAssociations: true
   - name: coredns
     version: latest
-  - name: kube-proxy
+  - name: eks-pod-identity-agent
     version: latest
 
 cloudWatch:
