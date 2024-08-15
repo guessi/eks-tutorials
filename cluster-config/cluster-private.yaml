@@ -2,9 +2,11 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: fully-private
+  name: eks-demo-private
   region: us-east-1
   version: "1.30"
+  # tags:
+  #   karpenter.sh/discovery: eks-demo-private
 
 availabilityZones:
 - us-east-1a

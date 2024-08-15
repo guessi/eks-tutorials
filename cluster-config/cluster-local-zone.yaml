@@ -5,8 +5,8 @@ metadata:
   name: eks-demo-local-zone
   region: us-east-1
   version: "1.30"
-  tags:
-    karpenter.sh/discovery: eks-demo-local-zone
+  # tags:
+  #   karpenter.sh/discovery: eks-demo-local-zone
 
 availabilityZones:
 - us-east-1a

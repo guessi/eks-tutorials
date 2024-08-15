@@ -5,8 +5,8 @@ metadata:
   name: eks-demo-ipv6
   region: us-east-1
   version: "1.30"
-  tags:
-    karpenter.sh/discovery: eks-demo-ipv6
+  # tags:
+  #   karpenter.sh/discovery: eks-demo-ipv6
 
 availabilityZones:
 - us-east-1a
