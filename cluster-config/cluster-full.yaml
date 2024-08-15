@@ -46,7 +46,7 @@ iam:
 
 managedNodeGroups:
   - name: mng-1
-    amiFamily: AmazonLinux2
+    amiFamily: AmazonLinux2023
     minSize: 2
     maxSize: 5
     desiredCapacity: 2
@@ -144,7 +144,7 @@ managedNodeGroups:
 
 # nodeGroups:
 #   - name: ng-1
-#     amiFamily: AmazonLinux2
+#     amiFamily: AmazonLinux2023
 #     # instancePrefix: mixed
 #     minSize: 2
 #     maxSize: 5

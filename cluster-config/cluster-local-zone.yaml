@@ -41,7 +41,7 @@ iam:
 
 nodeGroups:
   - name: ng-lz1
-    amiFamily: AmazonLinux2
+    amiFamily: AmazonLinux2023
     minSize: 2
     maxSize: 5
     desiredCapacity: 2
