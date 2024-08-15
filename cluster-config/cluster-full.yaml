@@ -96,28 +96,6 @@ managedNodeGroups:
 #       #!/bin/bash
 #       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
 #
-#   - name: ubuntu-1
-#     # AWS CLI:
-#     # $ aws ec2 describe-images --owners 099720109477 --filters "Name=name,Values=ubuntu-eks/k8s_1.29/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-2024*"
-#     ami: ami-0bce6c8ee6116e92b # ubuntu-eks/k8s_1.29/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-20240521, ref: https://cloud-images.ubuntu.com/aws-eks/
-#     amiFamily: Ubuntu2004
-#     minSize: 2
-#     maxSize: 5
-#     desiredCapacity: 2
-#     volumeSize: 30
-#     volumeType: gp3
-#     instanceTypes:
-#     - "t3a.small"
-#     enableDetailedMonitoring: true
-#     privateNetworking: true
-#     disableIMDSv1: true
-#     spot: true
-#     ssh:
-#       allow: false
-#     overrideBootstrapCommand: |
-#       #!/bin/bash
-#       /etc/eks/bootstrap.sh eks-demo --container-runtime containerd
-#
 #   - name: bottlerocket-1
 #     amiFamily: Bottlerocket
 #     minSize: 2
