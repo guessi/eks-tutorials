@@ -26,7 +26,7 @@ accessConfig:
   bootstrapClusterCreatorAdminPermissions: true
 
 iam:
-  withOIDC: true
+  # withOIDC: true # FIXME: https://github.com/eksctl-io/eksctl/issues/7925
 
 managedNodeGroups:
   - name: mng-1

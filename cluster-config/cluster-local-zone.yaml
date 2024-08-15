@@ -38,7 +38,7 @@ accessConfig:
   bootstrapClusterCreatorAdminPermissions: true
 
 iam:
-  withOIDC: true
+  # withOIDC: true # FIXME: https://github.com/eksctl-io/eksctl/issues/7925
 
 nodeGroups:
   - name: ng-lz1
