@@ -17,6 +17,7 @@ privateCluster:
 
 accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
+  bootstrapClusterCreatorAdminPermissions: true
 
 iam:
   withOIDC: true
