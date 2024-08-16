@@ -80,13 +80,13 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.183.0
+2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.188.0
 2024-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2024-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2/1.30]
+2024-XX-XX XX:XX:XX [ℹ]  nodegroup "mng-1" will use "" [AmazonLinux2023/1.30]
 2024-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.30
-2024-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with managed nodes
+2024-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-demo" in "us-east-1" region with Fargate profile and managed nodes
 2024-XX-XX XX:XX:XX [ℹ]  1 nodegroup (mng-1) was included (based on the include/exclude rules)
 2024-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 0 nodegroup stack(s)
 2024-XX-XX XX:XX:XX [ℹ]  will create a CloudFormation stack for cluster itself and 1 managed nodegroup stack(s)
@@ -96,13 +96,11 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2024-XX-XX XX:XX:XX [ℹ]
 2 sequential tasks: { create cluster control plane "eks-demo",
     2 sequential sub-tasks: {
-        6 sequential sub-tasks: {
+        4 sequential sub-tasks: {
+            1 task: { create addons },
             wait for control plane to become ready,
             update CloudWatch log retention,
-            associate IAM OIDC provider,
-            no tasks,
-            restart daemonset "kube-system/aws-node",
-            1 task: { create addons },
+            create fargate profiles,
         },
         create managed nodegroup "mng-1",
     }
@@ -110,16 +108,20 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2024-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-demo-cluster"
 2024-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-cluster"
 2024-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-cluster"
+2024-XX-XX XX:XX:XX [ℹ]  creating addon
+2024-XX-XX XX:XX:XX [ℹ]  successfully created addon
+2024-XX-XX XX:XX:XX [ℹ]  creating addon
+2024-XX-XX XX:XX:XX [ℹ]  successfully created addon
+2024-XX-XX XX:XX:XX [ℹ]  "addonsConfig.autoApplyPodIdentityAssociations" is set to true; will lookup recommended pod identity configuration for "vpc-cni" addon
+2024-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-addon-vpc-cni-podidentityrole-aws-node"
+2024-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-addon-vpc-cni-podidentityrole-aws-node"
+2024-XX-XX XX:XX:XX [ℹ]  creating addon
+2024-XX-XX XX:XX:XX [ℹ]  successfully created addon
+2024-XX-XX XX:XX:XX [ℹ]  creating addon
+2024-XX-XX XX:XX:XX [ℹ]  successfully created addon
 2024-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
-2024-XX-XX XX:XX:XX [ℹ]  daemonset "kube-system/aws-node" restarted
-2024-XX-XX XX:XX:XX [ℹ]  creating addon
-2024-XX-XX XX:XX:XX [ℹ]  addon "eks-pod-identity-agent" active
-2024-XX-XX XX:XX:XX [!]  IRSA has been deprecated; the recommended way to provide IAM permissions for "vpc-cni" addon is via pod identity associations; after addon creation is completed, run `eksctl utils migrate-to-pod-identity`
-2024-XX-XX XX:XX:XX [ℹ]  creating role using recommended policies for "vpc-cni" addon
-2024-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-addon-vpc-cni"
-2024-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-addon-vpc-cni"
-2024-XX-XX XX:XX:XX [ℹ]  creating addon
-2024-XX-XX XX:XX:XX [ℹ]  addon "vpc-cni" active
+2024-XX-XX XX:XX:XX [ℹ]  creating Fargate profile "karpenter" on EKS cluster "eks-demo"
+2024-XX-XX XX:XX:XX [ℹ]  created Fargate profile "karpenter" on EKS cluster "eks-demo"
 2024-XX-XX XX:XX:XX [ℹ]  building managed nodegroup stack "eksctl-eks-demo-nodegroup-mng-1"
 2024-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-demo-nodegroup-mng-1"
 2024-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-demo-nodegroup-mng-1"
@@ -136,10 +138,6 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2024-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-121-236.ec2.internal" is ready
 2024-XX-XX XX:XX:XX [ℹ]  node "ip-192-168-90-226.ec2.internal" is ready
 2024-XX-XX XX:XX:XX [✔]  created 1 managed nodegroup(s) in cluster "eks-demo"
-2024-XX-XX XX:XX:XX [ℹ]  creating addon
-2024-XX-XX XX:XX:XX [ℹ]  addon "coredns" active
-2024-XX-XX XX:XX:XX [ℹ]  creating addon
-2024-XX-XX XX:XX:XX [ℹ]  addon "kube-proxy" active
 2024-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
 2024-XX-XX XX:XX:XX [✔]  EKS cluster "eks-demo" in "us-east-1" region is ready
 ```
@@ -150,8 +148,8 @@ Verify the EKS nodes are running.
 ```sh
 % kubectl get nodes
 NAME                              STATUS   ROLES    AGE     VERSION
-ip-192-168-121-236.ec2.internal   Ready    <none>   5m47s   v1.30.0-eks-036c24b
-ip-192-168-90-226.ec2.internal    Ready    <none>   5m49s   v1.30.0-eks-036c24b
+ip-192-168-121-236.ec2.internal   Ready    <none>   5m47s   v1.30.2-eks-1552ad0
+ip-192-168-90-226.ec2.internal    Ready    <none>   5m49s   v1.30.2-eks-1552ad0
 ```
 
 ### Goal 2: Deploy nginx with Application Load Balancer (ALB)
