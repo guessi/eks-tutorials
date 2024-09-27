@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: eks-demo-full
   region: us-east-1
-  version: "1.30"
+  version: "1.31"
   tags:
     karpenter.sh/discovery: eks-demo-full
 
@@ -77,8 +77,8 @@ managedNodeGroups:
 
 #   - name: amazonlinux-1
 #     # AWS CLI:
-#     # $ aws ec2 describe-images --image-ids $(aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.30/amazon-linux-2/recommended/image_id --query "Parameter.Value" --output text)
-#     ami: ami-0e87fae068ae8d4e0 # amazon-eks-node-1.30-v20240514, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     # $ aws ec2 describe-images --image-ids $(aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.31/amazon-linux-2/recommended/image_id --query "Parameter.Value" --output text)
+#     ami: ami-03a66e914971f8646 # amazon-eks-node-1.31-v20240924, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
 #     amiFamily: AmazonLinux2
 #     minSize: 2
 #     maxSize: 5

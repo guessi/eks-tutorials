@@ -18,6 +18,9 @@ Please note this tutorial is for demonstration purpose only, please **_DO NOT_**
 <details>
 <summary>Click here :mag:</summary>
 
+- To get support for Amazon EKS 1.31
+    - support have been added after [eksctl-0.191.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.191.0) released.
+
 - To get support for Amazon EKS 1.30
     - support have been added after [eksctl-0.179.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.179.0) released.
 
