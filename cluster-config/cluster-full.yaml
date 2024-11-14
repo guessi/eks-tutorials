@@ -121,6 +121,33 @@ managedNodeGroups:
 #           node-labels:
 #           node-taints:
 
+#   - name: mng-windows
+#     amiFamily: WindowsServer2022FullContainer
+#     minSize: 2
+#     maxSize: 5
+#     desiredCapacity: 2
+#     volumeSize: 50
+#     volumeType: gp3
+#     instanceTypes:
+#     - "t3a.medium"
+#     enableDetailedMonitoring: true
+#     privateNetworking: true
+#     disableIMDSv1: true
+#     spot: true
+#     ssh:
+#       allow: false
+#     iam:
+#       attachPolicyARNs:
+#       - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+#       - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+#       # (Optional) Only required if you need "EC2 Instance Connect"
+#       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+#       # (Optional) Only required if you are using "SSM"
+#       - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+#       # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
+#       - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+#       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+
 # nodeGroups:
 #   - name: ng-1
 #     amiFamily: AmazonLinux2023
