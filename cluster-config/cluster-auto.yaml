@@ -1,0 +1,40 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-auto-mode
+  region: us-east-1
+  version: "1.31"
+
+availabilityZones:
+- us-east-1a
+- us-east-1b
+
+vpc:
+  cidr: 192.168.0.0/16
+  clusterEndpoints:
+    privateAccess: true
+    publicAccess: true
+  manageSharedNodeSecurityGroupRules: true
+  nat:
+    gateway: HighlyAvailable
+  publicAccessCIDRs: # you should configured a proper CIDR list here
+  - 0.0.0.0/0
+
+accessConfig:
+  authenticationMode: API_AND_CONFIG_MAP
+  bootstrapClusterCreatorAdminPermissions: true
+
+autoModeConfig:
+  enabled: true
+
+cloudWatch:
+  # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
+  clusterLogging:
+    logRetentionInDays: 90
+    enableTypes:
+    - "api"
+    - "audit"
+    - "authenticator"
+    - "controllerManager"
+    - "scheduler"
