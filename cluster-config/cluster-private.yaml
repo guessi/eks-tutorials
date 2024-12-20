@@ -50,13 +50,6 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
 
-fargateProfiles:
-  - name: karpenter
-    selectors:
-      - namespace: kube-system
-        labels:
-          app.kubernetes.io/name: karpenter
-
 addons:
   - name: kube-proxy
     version: latest

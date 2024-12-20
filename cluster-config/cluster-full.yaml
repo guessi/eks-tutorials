@@ -173,12 +173,12 @@ managedNodeGroups:
 #     ssh:
 #       allow: false
 
-fargateProfiles:
-  - name: karpenter
-    selectors:
-      - namespace: kube-system
-        labels:
-          app.kubernetes.io/name: karpenter
+# fargateProfiles:
+#   - name: karpenter
+#     selectors:
+#       - namespace: kube-system
+#         labels:
+#           app.kubernetes.io/name: karpenter
 
 addons:
   - name: kube-proxy
