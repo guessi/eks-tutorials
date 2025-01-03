@@ -32,6 +32,7 @@ managedNodeGroups:
     volumeType: gp3
     instanceTypes:
     - "t3a.medium"
+    - "t3.medium"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true

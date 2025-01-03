@@ -55,6 +55,7 @@ managedNodeGroups:
     volumeType: gp3
     instanceTypes:
     - "t3a.medium"
+    - "t3.medium"
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
@@ -87,6 +88,7 @@ managedNodeGroups:
 #     volumeType: gp3
 #     instanceTypes:
 #     - "t3a.medium"
+#     - "t3.medium"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -106,6 +108,7 @@ managedNodeGroups:
 #     volumeType: gp3
 #     instanceTypes:
 #     - "t3a.medium"
+#     - "t3.medium"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -130,6 +133,7 @@ managedNodeGroups:
 #     volumeType: gp3
 #     instanceTypes:
 #     - "t3a.medium"
+#     - "t3.medium"
 #     enableDetailedMonitoring: true
 #     privateNetworking: true
 #     disableIMDSv1: true
@@ -161,6 +165,7 @@ managedNodeGroups:
 #       capacityRebalance: false
 #       instanceTypes:
 #       - "t3a.medium"
+#       - "t3.medium"
 #       maxPrice: 0.0376 # t3a.medium
 #       onDemandBaseCapacity: 0
 #       onDemandPercentageAboveBaseCapacity: 50
