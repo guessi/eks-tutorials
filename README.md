@@ -47,25 +47,36 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2024-XX-XX XX:XX:XX [ℹ]  eksctl version 0.197.0
-2024-XX-XX XX:XX:XX [ℹ]  using region us-east-1
-2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
-2024-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2024-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.31
-2024-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-auto-mode" in "us-east-1" region with
-2024-XX-XX XX:XX:XX [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=us-east-1 --cluster=eks-auto-mode'
-2024-XX-XX XX:XX:XX [ℹ]  Kubernetes API endpoint access will use provided values {publicAccess=true, privateAccess=true} for cluster "eks-auto-mode" in "us-east-1"
-2024-XX-XX XX:XX:XX [ℹ]  configuring CloudWatch logging for cluster "eks-auto-mode" in "us-east-1" (enabled types: api, audit, authenticator, controllerManager, scheduler & no types disabled)
-2024-XX-XX XX:XX:XX [ℹ]
+2025-XX-XX XX:XX:XX [ℹ]  eksctl version 0.202.0
+2025-XX-XX XX:XX:XX [ℹ]  using region us-east-1
+2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
+2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
+2025-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.31
+2025-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-auto-mode" in "us-east-1" region with
+2025-XX-XX XX:XX:XX [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=us-east-1 --cluster=eks-auto-mode'
+2025-XX-XX XX:XX:XX [ℹ]  Kubernetes API endpoint access will use provided values {publicAccess=true, privateAccess=true} for cluster "eks-auto-mode" in "us-east-1"
+2025-XX-XX XX:XX:XX [ℹ]  configuring CloudWatch logging for cluster "eks-auto-mode" in "us-east-1" (enabled types: api, audit, authenticator, controllerManager, scheduler & no types disabled)
+2025-XX-XX XX:XX:XX [ℹ]  default addons metrics-server were not specified, will install them as EKS addons
+2025-XX-XX XX:XX:XX [ℹ]
 2 sequential tasks: { create cluster control plane "eks-auto-mode",
-    2 sequential sub-tasks: {
+    3 sequential sub-tasks: {
+        1 task: { create addons },
         wait for control plane to become ready,
         update CloudWatch log retention,
     }
 }
-2024-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-auto-mode-cluster"
-2024-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-cluster"
-2024-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-cluster"
+2025-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-auto-mode-cluster"
+2025-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-cluster"
+2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-cluster"
+2025-XX-XX XX:XX:XX [ℹ]  creating addon
+2025-XX-XX XX:XX:XX [ℹ]  successfully created addon
+2025-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
+2025-XX-XX XX:XX:XX [ℹ]  waiting for the control plane to become ready
+2025-XX-XX XX:XX:XX [✔]  saved kubeconfig as "/Users/demoUser/.kube/config"
+2025-XX-XX XX:XX:XX [ℹ]  no tasks
+2025-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-auto-mode" have been created
+2025-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
+2025-XX-XX XX:XX:XX [✔]  EKS cluster "eks-auto-mode" in "us-east-1" region is ready
 ```
 </details>
 
@@ -75,6 +86,8 @@ Verify there have no EKS node running initially.
 % kubectl get nodes
 No resources found # expected, since we are running Auto Mode enabled cluster.
 ```
+
+***NOTE*** For eksctl version higher than [v0.201.0](https://github.com/eksctl-io/eksctl/releases/tag/v0.201.0), you should find there have 1 node created, since `metrics-server` [became default addon for eksctl created cluster](https://github.com/eksctl-io/eksctl/pull/8118).
 
 ### Goal 2: Deploy workload and make sure Auto Mode work as expeceted
 
@@ -93,7 +106,7 @@ After workload deployed, there should have node provisioned by Auto Node after f
 ```sh
 % kubectl get nodes -L "eks.amazonaws.com/compute-type"
 NAME                  STATUS   ROLES    AGE   VERSION               COMPUTE-TYPE
-i-00f395d014ff8e657   Ready    <none>   11s   v1.31.1-eks-1b3e656   auto
+i-00f395d014ff8e657   Ready    <none>   11s   v1.31.3-eks-7636447   auto
 ```
 
 ### Goal 3: Figure out why HPA and Ingress not working?
