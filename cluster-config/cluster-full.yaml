@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: eks-demo-full
   region: us-east-1
-  version: "1.31"
+  version: "1.32"
   tags:
     karpenter.sh/discovery: eks-demo-full
 
@@ -35,6 +35,19 @@ vpc:
 accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
   bootstrapClusterCreatorAdminPermissions: true
+  accessEntries: []
+  # ref: https://eksctl.io/usage/access-entries/
+  # - principalARN: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${TARGET_ROLE_NAME}
+  #   accessPolicies:
+  #   - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+  #     accessScope:
+  #       type: cluster
+
+autoModeConfig:
+  enabled: true
+  nodePools: []
+  # - general-purpose
+  # - system
 
 iam:
   # withOIDC: true # FIXME: https://github.com/eksctl-io/eksctl/issues/7925
@@ -78,9 +91,9 @@ managedNodeGroups:
 
 #   - name: amazonlinux-1
 #     # AWS CLI:
-#     # $ aws ec2 describe-images --image-ids $(aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.31/amazon-linux-2/recommended/image_id --query "Parameter.Value" --output text)
-#     ami: ami-03a66e914971f8646 # amazon-eks-node-1.31-v20240924, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
-#     amiFamily: AmazonLinux2
+#     # $ aws ec2 describe-images --image-ids $(aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.32/amazon-linux-2023/x86_64/standard/recommended/image_id --query "Parameter.Value" --output text)
+#     ami: ami-0c29ccf9c4f16bd40 # amazon-eks-node-al2023-x86_64-standard-1.32-v20250123, ref: https://docs.aws.amazon.com/eks/latest/userguide/retrieve-ami-id.html
+#     amiFamily: AmazonLinux2023
 #     minSize: 2
 #     maxSize: 5
 #     desiredCapacity: 2
@@ -195,16 +208,16 @@ addons:
     version: latest
   - name: eks-pod-identity-agent
     version: latest
-  - name: amazon-cloudwatch-observability
-    version: latest
-  - name: aws-ebs-csi-driver
-    version: latest
-    useDefaultPodIdentityAssociations: true
-  - name: aws-efs-csi-driver
-    version: latest
-    useDefaultPodIdentityAssociations: true
-  - name: snapshot-controller
-    version: latest
+  # - name: amazon-cloudwatch-observability
+  #   version: latest
+  # - name: aws-ebs-csi-driver
+  #   version: latest
+  #   useDefaultPodIdentityAssociations: true
+  # - name: aws-efs-csi-driver
+  #   version: latest
+  #   useDefaultPodIdentityAssociations: true
+  # - name: snapshot-controller
+  #   version: latest
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html

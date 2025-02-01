@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: eks-auto-mode
   region: us-east-1
-  version: "1.31"
+  version: "1.32"
 
 availabilityZones:
 - us-east-1a
@@ -24,12 +24,19 @@ vpc:
 accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
   bootstrapClusterCreatorAdminPermissions: true
+  accessEntries: []
+  # ref: https://eksctl.io/usage/access-entries/
+  # - principalARN: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${TARGET_ROLE_NAME}
+  #   accessPolicies:
+  #   - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
+  #     accessScope:
+  #       type: cluster
 
 autoModeConfig:
   enabled: true
-  nodePools:
-  - general-purpose
-  - system
+  nodePools: []
+  # - general-purpose
+  # - system
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html

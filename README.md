@@ -43,6 +43,14 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 % eksctl create cluster -f ./cluster-config/cluster-auto.yaml
 ```
 
+OR (only when `accessEntries` not empty)
+
+```sh
+% cat cluster-config/cluster-auto.yaml | \
+    AWS_ACCOUNT_ID=$(aws sts get-caller-identity --output json --query "Account" | sed 's/"//g') envsubst '${AWS_ACCOUNT_ID}' | \
+    TARGET_ROLE_NAME=DemoRole envsubst '${TARGET_ROLE_NAME}' | eksctl create cluster -f -
+```
+
 <details>
 <summary>Click here to show sample deployment output :mag:</summary>
 
@@ -51,7 +59,7 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2025-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2025-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.31
+2025-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.32
 2025-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-auto-mode" in "us-east-1" region with
 2025-XX-XX XX:XX:XX [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=us-east-1 --cluster=eks-auto-mode'
 2025-XX-XX XX:XX:XX [ℹ]  Kubernetes API endpoint access will use provided values {publicAccess=true, privateAccess=true} for cluster "eks-auto-mode" in "us-east-1"
@@ -68,6 +76,11 @@ Make sure you have latest `eksctl` installed and you should be able to create EK
 2025-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-auto-mode-cluster"
 2025-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-cluster"
 2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-cluster"
+2025-XX-XX XX:XX:XX [ℹ]  creating access entry for principal ARN "arn:aws:iam::9876543210987:role/DemoRole"
+2025-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-accessentry-NBA57AVDVX4FK4JSRPLCBCK4FW7STRKQ"
+2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-accessentry-NBA57AVDVX4FK4JSRPLCBCK4FW7STRKQ"
+2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-accessentry-NBA57AVDVX4FK4JSRPLCBCK4FW7STRKQ"
+2025-XX-XX XX:XX:XX [ℹ]  created access entry for principal ARN "arn:aws:iam::9876543210987:role/DemoRole"
 2025-XX-XX XX:XX:XX [ℹ]  creating addon
 2025-XX-XX XX:XX:XX [ℹ]  successfully created addon
 2025-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
@@ -106,7 +119,7 @@ After workload deployed, there should have node provisioned by Auto Node after f
 ```sh
 % kubectl get nodes -L "eks.amazonaws.com/compute-type"
 NAME                  STATUS   ROLES    AGE   VERSION               COMPUTE-TYPE
-i-00f395d014ff8e657   Ready    <none>   11s   v1.31.3-eks-7636447   auto
+i-00f395d014ff8e657   Ready    <none>   11s   v1.32.0-eks-2e66e76   auto
 ```
 
 ### Goal 3: Figure out why HPA and Ingress not working?
