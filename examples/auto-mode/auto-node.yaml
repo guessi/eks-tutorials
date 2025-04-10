@@ -1,0 +1,55 @@
+---
+apiVersion: eks.amazonaws.com/v1
+kind: NodeClass
+metadata:
+  name: demo-nodeclass
+spec:
+  ephemeralStorage:
+    size: 30Gi
+  role: AmazonEKSAutoNodeRole
+  securityGroupSelectorTerms:
+  - id: sg-EXAMPLE
+  subnetSelectorTerms:
+  - tags:
+      kubernetes.io/role/internal-elb: "1"
+      alpha.eksctl.io/cluster-name: eks-auto-mode
+---
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: demo-nodepool
+spec:
+  disruption:
+    budgets:
+    - nodes: 10%
+    consolidateAfter: 30s
+    consolidationPolicy: WhenEmptyOrUnderutilized
+  template:
+    spec:
+      expireAfter: 336h
+      terminationGracePeriod: 24h0m0s
+      nodeClassRef:
+        group: eks.amazonaws.com
+        kind: NodeClass
+        name: demo-nodeclass
+      requirements:
+      - key: kubernetes.io/os
+        operator: In
+        values:
+        - linux
+      - key: eks.amazonaws.com/instance-family
+        operator: In
+        values:
+        - t3
+        - t3a
+        - t4g
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+        - amd64
+        - arm64
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+        - on-demand
+        - spot
