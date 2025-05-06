@@ -2,7 +2,7 @@
 
 Step by step tutorial for those who have zero knowledge to Amazon EKS.
 
-### Disclaimer
+## Disclaimer
 
 * The project here is for demonstration purpose only.
 
@@ -55,7 +55,7 @@ OR (only when `accessEntries` not empty)
 <summary>Click here to show sample deployment output :mag:</summary>
 
 ```
-2025-XX-XX XX:XX:XX [ℹ]  eksctl version 0.202.0
+2025-XX-XX XX:XX:XX [ℹ]  eksctl version 0.207.0
 2025-XX-XX XX:XX:XX [ℹ]  using region us-east-1
 2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
 2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
@@ -76,13 +76,8 @@ OR (only when `accessEntries` not empty)
 2025-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-auto-mode-cluster"
 2025-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-cluster"
 2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-cluster"
-2025-XX-XX XX:XX:XX [ℹ]  creating access entry for principal ARN "arn:aws:iam::9876543210987:role/DemoRole"
-2025-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-accessentry-NBA57AVDVX4FK4JSRPLCBCK4FW7STRKQ"
-2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-accessentry-NBA57AVDVX4FK4JSRPLCBCK4FW7STRKQ"
-2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-accessentry-NBA57AVDVX4FK4JSRPLCBCK4FW7STRKQ"
-2025-XX-XX XX:XX:XX [ℹ]  created access entry for principal ARN "arn:aws:iam::9876543210987:role/DemoRole"
-2025-XX-XX XX:XX:XX [ℹ]  creating addon
-2025-XX-XX XX:XX:XX [ℹ]  successfully created addon
+2025-XX-XX XX:XX:XX [ℹ]  creating addon: metrics-server
+2025-XX-XX XX:XX:XX [ℹ]  successfully created addon: metrics-server
 2025-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
 2025-XX-XX XX:XX:XX [ℹ]  waiting for the control plane to become ready
 2025-XX-XX XX:XX:XX [✔]  saved kubeconfig as "/Users/demoUser/.kube/config"

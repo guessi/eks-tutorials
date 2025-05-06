@@ -50,7 +50,9 @@ autoModeConfig:
   # - system
 
 iam:
-  # withOIDC: true # FIXME: https://github.com/eksctl-io/eksctl/issues/7925
+  # Required eksctl v0.206.0
+  # - https://github.com/eksctl-io/eksctl/releases/tag/v0.206.0
+  withOIDC: true
   # podIdentityAssociations:
   # - namespace: kube-system
   #   serviceAccountName: ebs-csi-controller-sa-self-managed
