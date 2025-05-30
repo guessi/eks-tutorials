@@ -43,7 +43,7 @@ managedNodeGroups:
       allow: false
     iam:
       attachPolicyARNs:
-      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly
       - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
       # (Optional) Only required if you need "EC2 Instance Connect"
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
