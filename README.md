@@ -51,43 +51,6 @@ OR (only when `accessEntries` not empty)
     TARGET_ROLE_NAME=DemoRole envsubst '${TARGET_ROLE_NAME}' | eksctl create cluster -f -
 ```
 
-<details>
-<summary>Click here to show sample deployment output :mag:</summary>
-
-```
-2025-XX-XX XX:XX:XX [ℹ]  eksctl version 0.207.0
-2025-XX-XX XX:XX:XX [ℹ]  using region us-east-1
-2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1a - public:192.168.0.0/19 private:192.168.64.0/19
-2025-XX-XX XX:XX:XX [ℹ]  subnets for us-east-1b - public:192.168.32.0/19 private:192.168.96.0/19
-2025-XX-XX XX:XX:XX [ℹ]  using Kubernetes version 1.32
-2025-XX-XX XX:XX:XX [ℹ]  creating EKS cluster "eks-auto-mode" in "us-east-1" region with
-2025-XX-XX XX:XX:XX [ℹ]  if you encounter any issues, check CloudFormation console or try 'eksctl utils describe-stacks --region=us-east-1 --cluster=eks-auto-mode'
-2025-XX-XX XX:XX:XX [ℹ]  Kubernetes API endpoint access will use provided values {publicAccess=true, privateAccess=true} for cluster "eks-auto-mode" in "us-east-1"
-2025-XX-XX XX:XX:XX [ℹ]  configuring CloudWatch logging for cluster "eks-auto-mode" in "us-east-1" (enabled types: api, audit, authenticator, controllerManager, scheduler & no types disabled)
-2025-XX-XX XX:XX:XX [ℹ]  default addons metrics-server were not specified, will install them as EKS addons
-2025-XX-XX XX:XX:XX [ℹ]
-2 sequential tasks: { create cluster control plane "eks-auto-mode",
-    3 sequential sub-tasks: {
-        1 task: { create addons },
-        wait for control plane to become ready,
-        update CloudWatch log retention,
-    }
-}
-2025-XX-XX XX:XX:XX [ℹ]  building cluster stack "eksctl-eks-auto-mode-cluster"
-2025-XX-XX XX:XX:XX [ℹ]  deploying stack "eksctl-eks-auto-mode-cluster"
-2025-XX-XX XX:XX:XX [ℹ]  waiting for CloudFormation stack "eksctl-eks-auto-mode-cluster"
-2025-XX-XX XX:XX:XX [ℹ]  creating addon: metrics-server
-2025-XX-XX XX:XX:XX [ℹ]  successfully created addon: metrics-server
-2025-XX-XX XX:XX:XX [ℹ]  set log retention to 90 days for CloudWatch logging
-2025-XX-XX XX:XX:XX [ℹ]  waiting for the control plane to become ready
-2025-XX-XX XX:XX:XX [✔]  saved kubeconfig as "/Users/demoUser/.kube/config"
-2025-XX-XX XX:XX:XX [ℹ]  no tasks
-2025-XX-XX XX:XX:XX [✔]  all EKS cluster resources for "eks-auto-mode" have been created
-2025-XX-XX XX:XX:XX [ℹ]  kubectl command should work with "/Users/demoUser/.kube/config", try 'kubectl get nodes'
-2025-XX-XX XX:XX:XX [✔]  EKS cluster "eks-auto-mode" in "us-east-1" region is ready
-```
-</details>
-
 Verify there have no EKS node running initially.
 
 ```sh
