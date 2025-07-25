@@ -77,7 +77,7 @@ After workload deployed, there should have node provisioned by Auto Node after f
 ```sh
 % kubectl get nodes -L "eks.amazonaws.com/compute-type"
 NAME                  STATUS   ROLES    AGE   VERSION               COMPUTE-TYPE
-i-00f395d014ff8e657   Ready    <none>   11s   v1.32.0-eks-2e66e76   auto
+i-EXAMPLE1234567890   Ready    <none>   11s   v1.33.x-eks-1234567   auto
 ```
 
 ### Goal 3: Figure out why HPA and Ingress not working?
