@@ -58,6 +58,9 @@ nodeGroups:
       - localzone-1
       - localzone-2
 
+addonsConfig:
+  autoApplyPodIdentityAssociations: true
+
 addons:
   - name: kube-proxy
     version: latest
@@ -67,6 +70,8 @@ addons:
   - name: coredns
     version: latest
   - name: eks-pod-identity-agent
+    version: latest
+  - name: metrics-server
     version: latest
 
 cloudWatch:
