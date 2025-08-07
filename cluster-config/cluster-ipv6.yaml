@@ -44,6 +44,7 @@ managedNodeGroups:
     enableDetailedMonitoring: true
     privateNetworking: true
     disableIMDSv1: true
+    disablePodIMDS: false
     spot: true
     ssh:
       allow: false
