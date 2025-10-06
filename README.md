@@ -8,8 +8,6 @@ Step by step tutorial for those who have zero knowledge to Amazon EKS.
 
 * **_DO NOT_** blindly apply it to your production environments.
 
-* Only [Standard Support versions](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#kubernetes-release-calendar) will be covered.
-
 ## Prerequisites
 
 - [eksctl](https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html) - The official CLI for Amazon EKS
