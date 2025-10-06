@@ -12,7 +12,7 @@ Step by step tutorial for those who have zero knowledge to Amazon EKS.
 
 ## Prerequisites
 
-- [eksctl](https://eksctl.io/) - The official CLI for Amazon EKS
+- [eksctl](https://docs.aws.amazon.com/eks/latest/eksctl/what-is-eksctl.html) - The official CLI for Amazon EKS
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) - The Kubernetes command-line tool
 - [helm](https://helm.sh/) - The Kubernetes Package Manage
 
