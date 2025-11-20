@@ -91,6 +91,8 @@ managedNodeGroups:
       # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
       - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+      # (Optional) Only required if you have "AWS Network Flow Monitor Agent" setup
+      - arn:aws:iam::aws:policy/CloudWatchNetworkFlowMonitorAgentPublishPolicy
 
 #   - name: amazonlinux-1
 #     # AWS CLI:
@@ -169,6 +171,8 @@ managedNodeGroups:
 #       # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
 #       - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
 #       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+#       # (Optional) Only required if you have "AWS Network Flow Monitor Agent" setup
+#       - arn:aws:iam::aws:policy/CloudWatchNetworkFlowMonitorAgentPublishPolicy
 
 # nodeGroups:
 #   - name: ng-1
