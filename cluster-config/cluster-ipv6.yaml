@@ -50,35 +50,38 @@ managedNodeGroups:
       allow: false
 
 addonsConfig:
-  autoApplyPodIdentityAssociations: true
+  # - https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html
+  autoApplyPodIdentityAssociations: false
 
 addons:
   - name: kube-proxy
     version: latest
   - name: vpc-cni
     version: latest
-    # "ec2:AssignIpv6Addresses" would be required for IPv6 cluster
-    # - https://github.com/aws/amazon-vpc-cni-k8s/blob/master/docs/iam-policy.md#ipv6-mode
-    attachPolicy:
-      Version: "2012-10-17"
-      Statement:
-      - Effect: Allow
-        Action:
-        - "ec2:AssignIpv6Addresses"
-        - "ec2:DescribeInstances"
-        - "ec2:DescribeTags"
-        - "ec2:DescribeNetworkInterfaces"
-        - "ec2:DescribeInstanceTypes"
-        Resource: '*'
-      - Effect: Allow
-        Action:
-        - "ec2:CreateTags"
-        Resource: 'arn:aws:ec2:*:*:network-interface/*'
+    podIdentityAssociations:
+    - namespace: kube-system
+      serviceAccountName: aws-node
+      # "ec2:AssignIpv6Addresses" would be required for IPv6 cluster
+      # - https://docs.aws.amazon.com/eks/latest/userguide/cni-iam-role.html#cni-iam-role-create-ipv6-policy
+      # - https://github.com/aws/amazon-vpc-cni-k8s/blob/master/docs/iam-policy.md#ipv6-mode
+      permissionPolicy:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - "ec2:AssignIpv6Addresses"
+          - "ec2:DescribeInstances"
+          - "ec2:DescribeTags"
+          - "ec2:DescribeNetworkInterfaces"
+          - "ec2:DescribeInstanceTypes"
+          Resource: '*'
+        - Effect: Allow
+          Action:
+          - "ec2:CreateTags"
+          Resource: 'arn:aws:ec2:*:*:network-interface/*'
   - name: coredns
     version: latest
   - name: eks-pod-identity-agent
-    version: latest
-  - name: metrics-server
     version: latest
 
 cloudWatch:

@@ -59,19 +59,22 @@ nodeGroups:
       - localzone-2
 
 addonsConfig:
-  autoApplyPodIdentityAssociations: true
+  # - https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html
+  autoApplyPodIdentityAssociations: false
 
 addons:
   - name: kube-proxy
     version: latest
   - name: vpc-cni
     version: latest
-    useDefaultPodIdentityAssociations: true
+    podIdentityAssociations:
+    - namespace: kube-system
+      serviceAccountName: aws-node
+      permissionPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
   - name: coredns
     version: latest
   - name: eks-pod-identity-agent
-    version: latest
-  - name: metrics-server
     version: latest
 
 cloudWatch:

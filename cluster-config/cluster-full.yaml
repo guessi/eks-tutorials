@@ -88,11 +88,6 @@ managedNodeGroups:
       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
       # (Optional) Only required if you are using "SSM"
       - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
-      # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
-      - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
-      - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
-      # (Optional) Only required if you have "AWS Network Flow Monitor Agent" setup
-      - arn:aws:iam::aws:policy/CloudWatchNetworkFlowMonitorAgentPublishPolicy
 
 #   - name: amazonlinux-1
 #     # AWS CLI:
@@ -168,11 +163,6 @@ managedNodeGroups:
 #       - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
 #       # (Optional) Only required if you are using "SSM"
 #       - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
-#       # (Optional) Only required if you have "Amazon CloudWatch Observability" setup
-#       - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
-#       - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
-#       # (Optional) Only required if you have "AWS Network Flow Monitor Agent" setup
-#       - arn:aws:iam::aws:policy/CloudWatchNetworkFlowMonitorAgentPublishPolicy
 
 # nodeGroups:
 #   - name: ng-1
@@ -209,30 +199,47 @@ managedNodeGroups:
 #           app.kubernetes.io/name: karpenter
 
 addonsConfig:
-  autoApplyPodIdentityAssociations: true
+  # - https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html
+  autoApplyPodIdentityAssociations: false
 
 addons:
   - name: kube-proxy
     version: latest
   - name: vpc-cni
     version: latest
-    useDefaultPodIdentityAssociations: true
+    podIdentityAssociations:
+    - namespace: kube-system
+      serviceAccountName: aws-node
+      permissionPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
   - name: coredns
     version: latest
   - name: eks-pod-identity-agent
     version: latest
   - name: metrics-server
     version: latest
-  # - name: amazon-cloudwatch-observability
-  #   version: latest
-  # - name: aws-ebs-csi-driver
-  #   version: latest
-  #   useDefaultPodIdentityAssociations: true
-  # - name: aws-efs-csi-driver
-  #   version: latest
-  #   useDefaultPodIdentityAssociations: true
-  # - name: snapshot-controller
-  #   version: latest
+  - name: aws-network-flow-monitoring-agent
+    version: latest
+    podIdentityAssociations:
+    - namespace: amazon-network-flow-monitor
+      serviceAccountName: aws-network-flow-monitor-agent-service-account
+      permissionPolicyARNs:
+      - arn:aws:iam::aws:policy/CloudWatchNetworkFlowMonitorAgentPublishPolicy
+  - name: amazon-cloudwatch-observability
+    version: latest
+    podIdentityAssociations:
+    - namespace: amazon-cloudwatch
+      serviceAccountName: cloudwatch-agent
+      permissionPolicyARNs:
+      - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+  - name: aws-ebs-csi-driver
+    version: latest
+    podIdentityAssociations:
+    - namespace: kube-system
+      serviceAccountName: ebs-csi-controller-sa
+      permissionPolicyARNs:
+      - arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
