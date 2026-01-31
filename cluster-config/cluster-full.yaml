@@ -9,7 +9,7 @@ metadata:
     karpenter.sh/discovery: eks-demo-full
 
 # mind the known issues of `availabilityZones` if you are using eksctl 0.86.0:
-# - https://github.com/weaveworks/eksctl/issues/4891
+# - https://github.com/eksctl-io/eksctl/issues/4891
 availabilityZones:
 - us-east-1a
 - us-east-1b
@@ -36,7 +36,7 @@ accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
   bootstrapClusterCreatorAdminPermissions: true
   accessEntries: []
-  # ref: https://eksctl.io/usage/access-entries/
+  # ref: https://docs.aws.amazon.com/eks/latest/eksctl/access-entries.html
   # - principalARN: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${TARGET_ROLE_NAME}
   #   accessPolicies:
   #   - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy

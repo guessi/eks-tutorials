@@ -151,7 +151,7 @@ Terminate the EKS cluster
 % eksctl delete cluster -f ./cluster-config/cluster-auto.yaml
 ```
 
-**OPTIONAL** Cleanup IAM User/Role/Policy and [Identity Provider (IdP)](https://console.aws.amazon.com/iamv2/home?#/identity_providers) with care.
+**OPTIONAL** Cleanup IAM User/Role/Policy and [Identity Provider (IdP)](https://console.aws.amazon.com/iam/home#/identity_providers) with care.
 
 ### Bonus
 
