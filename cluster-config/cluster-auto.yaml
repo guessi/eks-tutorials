@@ -25,18 +25,10 @@ accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
   bootstrapClusterCreatorAdminPermissions: true
   accessEntries: []
-  # ref: https://eksctl.io/usage/access-entries/
-  # - principalARN: arn:aws:iam::${AWS_ACCOUNT_ID}:role/${TARGET_ROLE_NAME}
-  #   accessPolicies:
-  #   - policyARN: arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy
-  #     accessScope:
-  #       type: cluster
 
 autoModeConfig:
   enabled: true
   nodePools: []
-  # - general-purpose
-  # - system
 
 cloudWatch:
   # ref: https://docs.aws.amazon.com/eks/latest/userguide/control-plane-logs.html
