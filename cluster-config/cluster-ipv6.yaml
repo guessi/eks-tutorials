@@ -25,11 +25,6 @@ accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
   bootstrapClusterCreatorAdminPermissions: true
 
-iam:
-  # Required eksctl v0.206.0
-  # - https://github.com/eksctl-io/eksctl/releases/tag/v0.206.0
-  withOIDC: true
-
 managedNodeGroups:
   - name: mng-1
     amiFamily: AmazonLinux2023
