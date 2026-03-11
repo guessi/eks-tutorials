@@ -3,7 +3,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    # Required annotations
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
 
@@ -20,7 +19,7 @@ metadata:
 
     # (Optional) Custom attributes
     # Load Balancer Attributes
-    # - https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.7/guide/ingress/annotations/#custom-attributes
+    # - https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/ingress/annotations/#custom-attributes
     # - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#load-balancer-attributes
     # Target Group Attributes
     # - https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-attributes

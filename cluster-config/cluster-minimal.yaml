@@ -52,6 +52,49 @@ managedNodeGroups:
       # (Optional) Only required if you are using "SSM"
       - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
 
+  - name: bottlerocket-1
+    amiFamily: Bottlerocket
+    minSize: 2
+    maxSize: 5
+    desiredCapacity: 2
+    volumeSize: 30
+    volumeType: gp3
+    instanceTypes:
+    - "t3a.medium"
+    - "t3.medium"
+    enableDetailedMonitoring: true
+    privateNetworking: true
+    disableIMDSv1: true
+    spot: true
+    bottlerocket:
+      enableAdminContainer: true
+
+  - name: mng-windows
+    amiFamily: WindowsServer2022FullContainer
+    minSize: 2
+    maxSize: 5
+    desiredCapacity: 2
+    volumeSize: 50
+    volumeType: gp3
+    instanceTypes:
+    - "t3a.medium"
+    - "t3.medium"
+    enableDetailedMonitoring: true
+    privateNetworking: true
+    disableIMDSv1: true
+    disablePodIMDS: false
+    spot: true
+    ssh:
+      allow: false
+    iam:
+      attachPolicyARNs:
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly
+      - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      # (Optional) Only required if you need "EC2 Instance Connect"
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      # (Optional) Only required if you are using "SSM"
+      - arn:aws:iam::aws:policy/AmazonSSMPatchAssociation
+
 addonsConfig:
   # - https://docs.aws.amazon.com/eks/latest/eksctl/pod-identity-associations.html
   autoApplyPodIdentityAssociations: false
@@ -69,6 +112,8 @@ addons:
   - name: coredns
     version: latest
   - name: eks-pod-identity-agent
+    version: latest
+  - name: metrics-server
     version: latest
 
 cloudWatch:

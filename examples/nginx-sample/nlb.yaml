@@ -1,0 +1,29 @@
+# NLB variant. Requires loadBalancerClass: eks.amazonaws.com/nlb on Auto Mode.
+# Replaces service.yaml + alb.yaml (shared name nginx-service) — delete those first:
+#   kubectl delete -f ./examples/nginx-sample/service.yaml
+#   kubectl delete -f ./examples/nginx-sample/alb.yaml
+# Then uncomment and: kubectl apply -f ./examples/nginx-sample/nlb.yaml
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   annotations:
+#     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+#     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+#     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+#   labels:
+#     app: nginx
+#   name: nginx-service
+#   namespace: default
+# spec:
+#   loadBalancerClass: eks.amazonaws.com/nlb # required on EKS Auto Mode
+#   ipFamilies:
+#   - IPv4
+#   ipFamilyPolicy: SingleStack
+#   ports:
+#   - name: http
+#     port: 80
+#     targetPort: 80
+#   selector:
+#     app: nginx
+#   type: LoadBalancer

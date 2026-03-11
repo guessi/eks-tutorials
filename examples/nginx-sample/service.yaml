@@ -1,0 +1,22 @@
+---
+# ClusterIP is sufficient for ALB target-type: ip (pod IPs targeted directly).
+# NLB/CLB variants in nlb.yaml/clb.yaml reuse this Service name — delete this
+# before switching load balancer type.
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: nginx-service
+  namespace: default
+spec:
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: nginx
+  type: ClusterIP

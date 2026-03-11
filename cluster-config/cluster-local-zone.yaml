@@ -1,6 +1,9 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
+# TEMPLATE: replace all placeholder values (vpc-XXX, sg-XXX, subnet-*, AZ name)
+# before applying. Requires a pre-existing VPC with Local Zone subnets.
+
 metadata:
   name: eks-demo-local-zone
   region: us-east-1
@@ -11,7 +14,7 @@ availabilityZones:
 - us-east-1b
 
 vpc:
-  cidr: 192.168.0.0/16
+  # BYO-VPC: supply id/securityGroup/subnets; do NOT also set cidr.
   clusterEndpoints:
     privateAccess: true
     publicAccess: true
@@ -20,16 +23,21 @@ vpc:
     gateway: HighlyAvailable
   publicAccessCIDRs: # you should configured a proper CIDR list here
   - 0.0.0.0/0
-  # id: "vpc-XXX"
-  # securityGroup: "sg-XXX"
-  # subnets:
-  #   public:
-  #     localzone-1:
-  #       az: "us-east-1-msp-1a"
-  #       id: "subnet-XXX"
-  #     localzone-2:
-  #       az: "us-east-1-msp-1a"
-  #       id: "subnet-XXX"
+  id: "vpc-XXX" # replace with your VPC id
+  securityGroup: "sg-XXX" # replace with your control-plane security group id
+  subnets:
+    private: # region subnets for control plane
+      us-east-1a:
+        id: "subnet-REGION-A"
+      us-east-1b:
+        id: "subnet-REGION-B"
+    public: # Local Zone subnets for node group
+      localzone-1:
+        az: "us-east-1-msp-1a"
+        id: "subnet-XXX"
+      localzone-2:
+        az: "us-east-1-msp-1a"
+        id: "subnet-YYY"
 
 accessConfig:
   authenticationMode: API_AND_CONFIG_MAP
@@ -42,11 +50,10 @@ nodeGroups:
     maxSize: 5
     desiredCapacity: 2
     volumeSize: 30
-    volumeType: gp2
+    volumeType: gp3
     instanceType: t3.medium # Local Zone have no "t3a", https://aws.amazon.com/about-aws/global-infrastructure/localzones/features/
     ssh:
-      allow: true
-      publicKeyName: "sshKeyName"
+      allow: false # set true and provide `publicKeyName` only if you need SSH
     subnets:
       - localzone-1
       - localzone-2

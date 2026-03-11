@@ -1,4 +1,5 @@
 ---
+# Custom NodeClass/NodePool — replace the placeholders before applying.
 apiVersion: eks.amazonaws.com/v1
 kind: NodeClass
 metadata:
@@ -6,13 +7,13 @@ metadata:
 spec:
   ephemeralStorage:
     size: 30Gi
-  role: AmazonEKSAutoNodeRole
+  role: AmazonEKSAutoNodeRole # replace with your Auto Mode node role name
   securityGroupSelectorTerms:
-  - id: sg-EXAMPLE
+  - id: sg-EXAMPLE # replace with your security group id
   subnetSelectorTerms:
   - tags:
       kubernetes.io/role/internal-elb: "1"
-      alpha.eksctl.io/cluster-name: eks-auto-mode
+      alpha.eksctl.io/cluster-name: eks-auto-mode # replace with your cluster name
 ---
 apiVersion: karpenter.sh/v1
 kind: NodePool

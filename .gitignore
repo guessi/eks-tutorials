@@ -1,0 +1,22 @@
+# Kubernetes / cluster credentials
+kubeconfig
+kubeconfig*.yaml
+*.kubeconfig
+
+# Keys and certificates
+*.pem
+*.key
+*.crt
+*.p12
+
+# Local env / secrets
+.env
+.env.*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/

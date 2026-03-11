@@ -1,8 +1,6 @@
-###
-### WARNING - DO-NOT-USE - Classic Load Balancer is no longer recommended
-### Ref: https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/migrate-classic-load-balancer.html
-###
-
+# CLB variant. NOT supported on EKS Auto Mode (stays <pending>); use on a
+# classic cluster (e.g. cluster-minimal.yaml) only. Replaces service.yaml +
+# alb.yaml — delete those first (see steps in nlb.yaml).
 # ---
 # apiVersion: v1
 # kind: Service
