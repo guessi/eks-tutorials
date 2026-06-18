@@ -17,9 +17,6 @@
 #   namespace: default
 # spec:
 #   loadBalancerClass: eks.amazonaws.com/nlb # required on EKS Auto Mode
-#   ipFamilies:
-#   - IPv4
-#   ipFamilyPolicy: SingleStack
 #   ports:
 #   - name: http
 #     port: 80

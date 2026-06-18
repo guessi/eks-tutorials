@@ -10,9 +10,6 @@ metadata:
   name: nginx-service
   namespace: default
 spec:
-  ipFamilies:
-    - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
     - name: http
       port: 80
