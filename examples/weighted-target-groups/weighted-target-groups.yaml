@@ -1,0 +1,111 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webapp
+    version: "1"
+  name: webapp-deployment-1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+      version: "1"
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: "1"
+    spec:
+      containers:
+      - image: public.ecr.aws/docker/library/httpd:alpine
+        name: httpd
+        ports:
+        - containerPort: 80
+          protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webapp
+    version: "2"
+  name: webapp-deployment-2
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+      version: "2"
+  template:
+    metadata:
+      labels:
+        app: webapp
+        version: "2"
+    spec:
+      containers:
+      - image: public.ecr.aws/docker/library/nginx:stable-alpine
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: webapp
+    version: "1"
+  name: webapp-service-httpd
+  namespace: default
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: webapp
+    version: "1"
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/actions.TCP-80: >
+      {
+        "type": "forward",
+        "forwardConfig": {
+          "baseServiceWeight": 10,
+          "targetGroups": [
+            {
+              "serviceName": "webapp-service-httpd",
+              "servicePort": 80,
+              "weight": 90
+            }
+          ],
+          "targetGroupStickinessConfig": {
+            "enabled": false
+          }
+        }
+      }
+
+  labels:
+    app: webapp
+  name: webapp-service
+  namespace: default
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+  selector:
+    app: webapp
+    version: "2"
+  type: LoadBalancer
