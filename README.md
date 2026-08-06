@@ -34,7 +34,7 @@ This tutorial only uses `cluster-config/cluster-auto.yaml`, but the
 | `cluster-ipv6.yaml`       | IPv6 cluster (`ipFamily: IPv6`) including the extra VPC CNI IAM permissions IPv6 requires.                                                                                                                                                                         |
 | `cluster-local-zone.yaml` | Template for running self-managed nodes in an AWS Local Zone (requires a pre-existing VPC; see the warning at the top of the file).                                                                                                                                |
 
-> **EKS version:** every config pins `version: "1.35"`. If that version is outside the supported EKS window when you run it, `eksctl` will fail to create the cluster — bump it to a currently supported version first.
+> **EKS version:** every config pins `version: "1.36"`. If that version is outside the supported EKS window when you run it, `eksctl` will fail to create the cluster — bump it to a currently supported version first.
 >
 > **Cost:** several configs set `nat.gateway: HighlyAvailable` (one NAT gateway per AZ) and `enableDetailedMonitoring: true`; both incur ongoing charges. For a throwaway demo, use `nat.gateway: Single` and drop detailed monitoring.
 
@@ -91,7 +91,7 @@ After workload deployed, there should have node provisioned by Auto Node after a
 ```sh
 % kubectl get nodes -L "eks.amazonaws.com/compute-type"
 NAME                  STATUS   ROLES    AGE   VERSION               COMPUTE-TYPE
-i-EXAMPLE1234567890   Ready    <none>   11s   v1.35.x-eks-1234567   auto
+i-EXAMPLE1234567890   Ready    <none>   11s   v1.36.x-eks-1234567   auto
 ```
 
 ### Goal 3: Figure out why HPA and Ingress not working?
